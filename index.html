@@ -1,770 +1,1919 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ÂMÉ — Gastronomía & Culture de Prestige</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root { --primary: #5B0B23; --secondary: #DBC7C3; --bg-light: #FDF9F8; --text-dark: #2D1A1E; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-dark); margin: 0; overflow-x: hidden; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        input::placeholder { color: #9ca3af; opacity: 0.7; }
-        .modal-fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        .btn-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #5B0B23; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lima Focacceria - Focaccias Artesanales Premium</title>
+  
+  <!-- Tipografías de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS y Lucide Icons (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-        .custom-range {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 10px;
-            outline: none;
-            cursor: pointer;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            focaccia: {
+              cream: '#F7F5F0',   // Fondo rústico texturizado (harina y papel kraft)
+              cocoa: '#4A3525',   // Texto principal y títulos (marrón cacao acogedor)
+              kraft: '#D2A275',   // Bordes / Tonos dorados tostados
+            }
+          },
+          fontFamily: {
+            title: ['Montserrat', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
         }
+      }
+    }
+  </script>
 
-        .custom-range::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
-            cursor: grab;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(91, 11, 35, 0.3);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-        }
+  <style>
+    /* Efecto sutil de textura granulada de harina/papel kraft en el fondo */
+    .rustic-bg {
+      background-color: #F7F5F0;
+      background-image: radial-gradient(#4a352503 1px, transparent 0), radial-gradient(#4a352503 1px, transparent 0);
+      background-size: 10px 10px;
+      background-position: 0 0, 5px 5px;
+    }
 
-        .custom-range::-webkit-slider-thumb:active {
-            cursor: grabbing;
-            transform: scale(1.1);
-        }
-    </style>
+    /* Ocultar scrollbar pero mantener funcionalidad */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Transición suave para las imágenes y hover sutil del 3% */
+    .img-zoom {
+      overflow: hidden;
+    }
+    .img-zoom img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .img-zoom:hover img {
+      transform: scale(1.03);
+    }
+    
+    /* Personalización de foco para inputs */
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #4A3525 !important;
+    }
+
+    /* Animación de marquesina infinita para las fotos de Instagram */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .animate-marquee-infinite {
+      display: flex;
+      width: max-content;
+      animation: marquee 35s linear infinite;
+    }
+
+    .animate-marquee-infinite:hover {
+      animation-play-state: paused;
+    }
+
+    /* Solución de superposiciones en la barra de navegación */
+    header {
+      z-index: 99999999 !important;
+      pointer-events: auto !important;
+    }
+    header a, header button, header img {
+      cursor: pointer !important;
+      pointer-events: auto !important;
+      position: relative;
+      z-index: 100000000 !important;
+    }
+
+    /* Prevención de bloqueos por capas vacías */
+    .custom-hidden {
+      display: none !important;
+    }
+  </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="rustic-bg text-focaccia-cocoa font-body antialiased selection:bg-focaccia-kraft selection:text-focaccia-cream">
 
-    <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+  <!-- ================= BARRA DE NAVEGACIÓN SUPERIOR ================= -->
+  <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300 pointer-events-auto">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between pointer-events-auto">
+      
+      <!-- Logotipo oficial transparente Gemini_Generated_Image_8h8qyp8h8qyp8h8q.png -->
+      <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-16 pointer-events-auto">
+        <img src="Gemini_Generated_Image_8h8qyp8h8qyp8h8q.png" alt="Lima Focacceria" class="h-10 md:h-12 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+        <div class="hidden flex items-center gap-3">
+          <div class="relative h-11 w-11 flex items-center justify-center bg-focaccia-cocoa rounded-xl text-focaccia-cream font-title font-black text-xl tracking-tighter">
+            L
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="font-title font-black text-xs tracking-widest text-focaccia-cocoa uppercase leading-none">LIMA</span>
+            <span class="font-title font-bold text-[8px] tracking-[0.25em] text-focaccia-kraft uppercase">FOCACCERIA</span>
+          </div>
+        </div>
+      </a>
 
-        const Icon = ({ name, size = 24, className = "" }) => {
-            useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
-            return <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>;
-        };
+      <!-- Menú Desktop con enlaces de navegación interactivos para desplazamiento fluido -->
+      <nav class="hidden md:flex items-center space-x-10 text-[11px] font-title font-bold tracking-widest pointer-events-auto">
+        <a href="#concepto" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">EL CONCEPTO</a>
+        <a href="#carta" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">LA CARTA</a>
+        <a href="#proceso" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">EL PROCESO</a>
+        <a href="#instagram" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">MOMENTOS</a>
+        <a href="#contacto" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">ENCUÉNTRANOS</a>
+      </nav>
 
-        const SuccessModal = ({ isOpen, onClose, content }) => {
-            if (!isOpen) return null;
-            return (
-                <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 text-black text-left">
-                    <div className="absolute inset-0 bg-black/95 backdrop-blur-xl" onClick={onClose}></div>
-                    <div className="bg-white w-full max-w-lg relative z-10 shadow-2xl rounded-sm p-12 text-center space-y-10 modal-fade-in text-black">
-                        <div className="w-24 h-24 flex items-center justify-center border-2 border-[#5B0B23] mx-auto text-[#5B0B23]"><span className="text-5xl font-serif font-bold italic">Â</span></div>
-                        <div className="space-y-4 text-black text-center">
-                            <h2 className="text-4xl font-serif text-[#5B0B23]">{content.success.title}</h2>
-                            <div className="w-12 h-0.5 bg-[#5B0B23]/20 mx-auto"></div>
-                            <p className="text-gray-600 leading-relaxed font-serif italic text-lg px-4">{content.success.message}</p>
-                        </div>
-                        <button onClick={onClose} className="w-full py-4 text-white uppercase text-[10px] font-bold tracking-[0.4em] shadow-xl bg-[#5B0B23] hover:bg-black btn-transition">{content.success.btn}</button>
-                    </div>
-                </div>
-            );
-        };
+      <!-- Botones de Acción Derecho -->
+      <div class="flex items-center space-x-4">
+        <!-- Botón del Carrito -->
+        <button onclick="toggleCart()" class="relative p-2.5 text-focaccia-cocoa hover:text-focaccia-kraft transition-colors" aria-label="Ver Carrito">
+          <i data-lucide="shopping-bag" class="w-5 h-5 stroke-[1.5]"></i>
+          <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-focaccia-cocoa text-focaccia-cream text-[9px] font-title font-bold w-5 h-5 rounded-full flex items-center justify-center border border-focaccia-cream hidden">
+            0
+          </span>
+        </button>
 
-        const UniversalCheckout = ({ isOpen, onClose, onComplete, title, subtitle, amount, details, content }) => {
-            if (!isOpen) return null;
-            const ct = content.checkout;
-            return (
-                <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 text-black text-left">
-                    <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={onClose}></div>
-                    <div className="bg-white w-full max-w-4xl relative z-10 shadow-2xl rounded-sm overflow-hidden flex flex-col md:flex-row modal-fade-in text-black">
-                        <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors z-[260]"><Icon name="x"/></button>
-                        <div className="flex-1 p-8 md:p-12 space-y-8 bg-white text-left text-black">
-                            <div className="flex items-center space-x-3 text-[#5B0B23]"><Icon name="shield-check" size={28}/><h2 className="text-3xl font-serif leading-tight text-[#5B0B23]">{title}</h2></div>
-                            <div className="space-y-6">
-                                <div className="grid gap-5">
-                                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-[0.2em] border-b pb-1">{ct.personalData}</p>
-                                    <div className="space-y-4 text-left">
-                                        <div className="space-y-1">
-                                            <label className="text-[9px] uppercase text-gray-400 font-bold">{ct.fullName}</label>
-                                            <input type="text" className="w-full border-b border-gray-100 py-2 text-sm outline-none focus:border-[#5B0B23] transition-colors text-black" />
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-6">
-                                            <div className="space-y-1">
-                                                <label className="text-[9px] uppercase text-gray-400 font-bold">{ct.email}</label>
-                                                <input type="email" className="w-full border-b border-gray-100 py-2 text-sm outline-none focus:border-[#5B0B23] transition-colors text-black" />
-                                            </div>
-                                            <div className="space-y-1">
-                                                <label className="text-[9px] uppercase text-gray-400 font-bold">{ct.phone}</label>
-                                                <input type="tel" className="w-full border-b border-gray-100 py-2 text-sm outline-none focus:border-[#5B0B23] transition-colors text-black" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="grid gap-5">
-                                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-[0.2em] border-b pb-1">{ct.paymentData}</p>
-                                    <div className="space-y-4">
-                                        <div className="relative"><Icon name="credit-card" size={18} className="absolute left-0 top-3 text-gray-300"/><input type="text" placeholder={ct.cardNumber} className="w-full border-b border-gray-100 py-3 pl-8 text-sm outline-none focus:border-[#5B0B23] transition-colors text-black" /></div>
-                                        <div className="flex gap-6"><input type="text" placeholder={ct.expiry} className="w-1/2 border-b border-gray-100 py-3 text-sm outline-none focus:border-[#5B0B23] transition-colors text-black" /><input type="text" placeholder="CVV" className="w-1/2 border-b border-gray-100 py-3 text-sm outline-none focus:border-[#5B0B23] transition-colors text-black" /></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="md:w-80 p-10 bg-[#5B0B23] text-white flex flex-col justify-center items-center text-center space-y-10">
-                            <div className="space-y-4">
-                                <h3 className="text-xl font-serif italic">{subtitle}</h3>
-                                <div className="w-12 h-0.5 bg-[#DBC7C3] mx-auto opacity-30"></div>
-                                <div className="space-y-2">
-                                    {details.map((d, i) => <p key={i} className="text-[9px] uppercase tracking-widest opacity-60">{d}</p>)}
-                                    <p className="text-4xl font-serif text-[#DBC7C3] mt-4">{amount}</p>
-                                </div>
-                            </div>
-                            <button onClick={onComplete} className="w-full py-5 font-bold uppercase text-[11px] tracking-[0.3em] shadow-2xl btn-transition bg-[#DBC7C3] text-[#5B0B23] border border-[#DBC7C3] hover:bg-white hover:text-[#5B0B23]">{ct.btnPay}</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
+        <!-- Menú Móvil Hamburger -->
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-focaccia-cocoa" aria-label="Menú">
+          <i data-lucide="menu" class="w-6 h-6 stroke-[1.5]" id="menu-icon"></i>
+        </button>
+      </div>
+    </div>
 
-        const App = () => {
-            const [scrolled, setScrolled] = useState(false);
-            const [lang, setLang] = useState('es');
-            const [langMenuOpen, setLangMenuOpen] = useState(false);
-            const [selectedItinerary, setSelectedItinerary] = useState(null);
-            const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-            const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-            const [isEventCheckoutOpen, setIsEventCheckoutOpen] = useState(false);
-            const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+    <!-- Menú Móvil Desplegable -->
+    <div id="mobile-menu" class="hidden md:hidden bg-focaccia-cream border-b border-focaccia-kraft/20 px-6 py-6 transition-all duration-300">
+      <nav class="flex flex-col space-y-4 text-xs font-title font-semibold tracking-widest">
+        <a href="#concepto" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">EL CONCEPTO</a>
+        <a href="#carta" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">LA CARTA</a>
+        <a href="#proceso" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">EL PROCESO</a>
+        <a href="#instagram" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">MOMENTOS</a>
+        <a href="#contacto" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2">ENCUÉNTRANOS</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= SECCIÓN HERO PRINCIPAL ================= -->
+  <section class="relative min-h-screen py-16 md:py-24 flex items-center bg-cover bg-center overflow-hidden" 
+           style="background-image: url('https://images.unsplash.com/photo-1571244856341-4f3dd95db33e?q=80&w=1920&auto=format&fit=crop');">
+    
+    <!-- Capa de oscurecimiento de fondo (Cacao-Warm Overlay) para máxima legibilidad -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#21140B]/95 via-[#2F1E13]/90 to-[#422C1D]/60 z-0"></div>
+
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+      <div class="max-w-2xl space-y-5">
+        
+        <div class="space-y-2">
+          <div class="flex items-center space-x-2 text-focaccia-kraft">
+            <span class="h-[1px] w-8 bg-focaccia-kraft"></span>
+            <span class="text-[10px] md:text-xs tracking-[0.3em] font-title font-bold uppercase text-focaccia-kraft">Masa Madre de 48 Horas</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-title font-black text-focaccia-cream leading-[1.1] tracking-wide">
+            CRUJIENTE<br>POR FUERA,<br>
+            <span class="text-focaccia-kraft font-normal italic lowercase font-serif leading-none tracking-normal block my-0.5">esponjosa</span>
+            POR DENTRO.
+          </h1>
+        </div>
+        
+        <p class="text-sm md:text-base text-focaccia-cream/90 font-normal max-w-lg leading-relaxed">
+          Horneadas a diario en Miraflores con fermentación lenta, aceite de oliva extra virgen y sal de Maras.
+        </p>
+
+        <!-- CTA Botón Elegante -->
+        <div class="pt-1 flex flex-col sm:flex-row gap-4 items-start">
+          <a href="#carta" class="inline-flex items-center justify-center px-8 py-4 bg-focaccia-cream text-focaccia-cocoa text-xs font-title font-bold tracking-widest rounded-xl hover:bg-focaccia-kraft hover:text-focaccia-cream transition-all duration-300 text-center shadow-md">
+            VER LA CARTA DE HOY
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FRANJA DE TRANSICIÓN RÚSTICA ================= -->
+  <div class="relative w-full bg-[#FAF9F6] border-b border-focaccia-kraft/20 py-5 flex justify-center items-center z-10">
+    <div class="flex items-center space-x-4 text-[10px] md:text-xs font-title font-bold tracking-[0.25em] text-focaccia-kraft uppercase">
+      <span class="h-[1px] w-12 md:w-24 bg-focaccia-kraft/35"></span>
+      <span>Tradición & Masa Madre</span>
+      <svg class="w-4 h-4 text-focaccia-kraft fill-focaccia-kraft/20 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+      </svg>
+      <span>Hecho a Mano</span>
+      <span class="h-[1px] w-12 md:w-24 bg-focaccia-kraft/35"></span>
+    </div>
+  </div>
+
+  <!-- ================= SECCIÓN EL CONCEPTO ================= -->
+  <section id="concepto" class="pt-20 md:pt-32 pb-14 md:pb-20 border-t border-focaccia-kraft/20 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        
+        <!-- Columna Imagen Izquierda -->
+        <div class="lg:col-span-6 order-2 lg:order-1">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-7">
+              <div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-md img-zoom transition-all duration-500 ease-out hover:rotate-2 hover:scale-[1.02]">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop" 
+                     alt="Proceso de amasado de pan artesanal" 
+                     class="w-full h-full object-cover">
+              </div>
+            </div>
+            <div class="col-span-5 flex flex-col justify-between">
+              <div class="aspect-square rounded-2xl overflow-hidden shadow-sm mb-4 img-zoom transition-all duration-500 ease-out hover:-rotate-3 hover:scale-[1.03]">
+                <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=600&auto=format&fit=crop" 
+                     alt="Aceite de oliva extra virgen" 
+                     class="w-full h-full object-cover">
+              </div>
+              <div class="bg-focaccia-kraft/10 p-6 rounded-2xl border border-focaccia-kraft/20 flex flex-col justify-center h-full transition-all duration-500 hover:rotate-1">
+                <i data-lucide="heart" class="w-6 h-6 text-focaccia-kraft mb-3"></i>
+                <p class="text-xs font-medium text-focaccia-cocoa/80 leading-relaxed italic">
+                  "El secreto es no tener prisa. El tiempo y la temperatura controlada hacen todo el trabajo."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Texto Concepto Derecha -->
+        <div class="lg:col-span-6 space-y-8 order-1 lg:order-2">
+          <div class="space-y-4">
+            <span class="text-[10px] md:text-xs tracking-[0.3em] font-title font-bold text-focaccia-kraft uppercase block">Nuestra Filosofía</span>
+            <h2 class="text-3xl md:text-4xl font-title font-black leading-tight tracking-wide">
+              HONESTA, RÚSTICA, HECHA A MANO.
+            </h2>
+          </div>
+
+          <div class="space-y-6 text-sm md:text-base text-focaccia-cocoa/85 font-normal leading-relaxed">
+            <p>
+              En <strong class="font-bold text-focaccia-cocoa">Lima Focacceria</strong> honramos la tradición de la panificación lenta. Cada masa fermenta en frío por <strong class="font-bold">48 horas</strong>, logrando una focaccia ligera, aireada y muy crujiente.
+            </p>
+            <p>
+              Ahora tú eres el creador: diseña tu combinación ideal usando nuestra propuesta de sándwiches personalizados, y acompáñalos con café origen Cusco o repostería artesanal horneada a diario en Miraflores.
+            </p>
+          </div>
+
+          <!-- Puntos Clave -->
+          <div class="space-y-3 pt-4">
+            <div class="flex items-start space-x-3">
+              <i data-lucide="check" class="w-5 h-5 text-focaccia-kraft flex-shrink-0 mt-0.5"></i>
+              <span class="text-sm font-semibold">Harinas de alta fuerza de molinos locales seleccionados.</span>
+            </div>
+            <div class="flex items-start space-x-3">
+              <i data-lucide="check" class="w-5 h-5 text-focaccia-kraft flex-shrink-0 mt-0.5"></i>
+              <span class="text-sm font-semibold">Arma tu propia combinación con ingredientes 100% personalizables.</span>
+            </div>
+            <div class="flex items-start space-x-3">
+              <i data-lucide="check" class="w-5 h-5 text-focaccia-kraft flex-shrink-0 mt-0.5"></i>
+              <span class="text-sm font-semibold">Cafetería de especialidad y postres caseros para completar la experiencia.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN LA CARTA ================= -->
+  <section id="carta" class="pt-14 md:pt-20 pb-20 md:pb-32 bg-focaccia-cream border-t border-focaccia-kraft/20 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Encabezado de la Carta -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+        <div class="space-y-4">
+          <span class="text-[10px] md:text-xs tracking-[0.3em] font-title font-bold text-focaccia-kraft uppercase block">Especialidades del Día</span>
+          <h2 class="text-3xl md:text-4xl font-title font-black tracking-wide">NUESTRA CARTA</h2>
+        </div>
+        
+        <!-- Filtros de Categoría -->
+        <div class="flex flex-wrap gap-2 md:gap-4 text-xs font-title font-bold tracking-widest border-b border-focaccia-kraft/20 pb-2 overflow-x-auto no-scrollbar">
+          <button onclick="filterMenu('clasicas')" id="btn-clasicas" class="px-3 py-2 text-focaccia-cocoa border-b-2 border-focaccia-cocoa transition-all duration-300">CLÁSICAS</button>
+          <button onclick="filterMenu('focaccias')" id="btn-focaccias" class="px-3 py-2 text-focaccia-cocoa/50 hover:text-focaccia-cocoa border-b-2 border-transparent transition-all duration-300">FOCACCIAS</button>
+          <button onclick="filterMenu('postres')" id="btn-postres" class="px-3 py-2 text-focaccia-cocoa/50 hover:text-focaccia-cocoa border-b-2 border-transparent transition-all duration-300">POSTRES</button>
+          <button onclick="filterMenu('bebidas')" id="btn-bebidas" class="px-3 py-2 text-focaccia-cocoa/50 hover:text-focaccia-cocoa border-b-2 border-transparent transition-all duration-300">BEBIDAS</button>
+        </div>
+      </div>
+
+      <!-- Grid de Productos -->
+      <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300">
+        <!-- Contenido generado dinámicamente con JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN EL PROCESO ================= -->
+  <section id="proceso" class="py-20 md:py-32 bg-[#FAF9F6] border-t border-focaccia-kraft/20 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <!-- Cabecera Central -->
+      <div class="text-center max-w-2xl mx-auto space-y-4 mb-20">
+        <span class="text-[10px] md:text-xs tracking-[0.3em] font-title font-bold text-focaccia-kraft uppercase block">Paso a Paso</span>
+        <h2 class="text-3xl md:text-4xl font-title font-black tracking-wide">EL ARTE DE LA ESPERA</h2>
+        <p class="text-sm text-focaccia-cocoa/75">Hacer una focaccia excepcional requiere dedicación, respeto por el tiempo y materias primas extraordinarias.</p>
+      </div>
+
+      <!-- Timeline visual -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+        <div class="hidden md:block absolute top-[28%] left-[10%] right-[10%] h-[1px] bg-focaccia-kraft/30 z-0"></div>
+
+        <!-- Paso 1 -->
+        <div class="space-y-6 text-center z-10">
+          <div class="mx-auto w-14 h-14 rounded-full bg-focaccia-cream border border-focaccia-kraft flex items-center justify-center font-title font-bold text-lg text-focaccia-cocoa shadow-sm">
+            01
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-title font-bold text-sm tracking-widest uppercase">EL AMASADO Y REPOSO</h3>
+            <p class="text-xs text-focaccia-cocoa/75 leading-relaxed max-w-xs mx-auto">
+              Mezclamos harina de fuerza con 80% de hidratación y abundante aceite de oliva extra virgen. No forzamos el gluten, dejamos que se relaje lentamente.
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="space-y-6 text-center z-10">
+          <div class="mx-auto w-14 h-14 rounded-full bg-focaccia-cream border border-focaccia-kraft flex items-center justify-center font-title font-bold text-lg text-focaccia-cocoa shadow-sm">
+            02
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-title font-bold text-sm tracking-widest uppercase">FERMENTACIÓN LENTA</h3>
+            <p class="text-xs text-focaccia-cocoa/75 leading-relaxed max-w-xs mx-auto">
+              Durante 48 horas la masa reposa en frío. Este proceso desarrolla ácidos orgánicos que producen un aroma único y una textura sumamente ligera.
+            </p>
+          </div>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="space-y-6 text-center z-10">
+          <div class="mx-auto w-14 h-14 rounded-full bg-focaccia-cream border border-focaccia-kraft flex items-center justify-center font-title font-bold text-lg text-focaccia-cocoa shadow-sm">
+            03
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-title font-bold text-sm tracking-widest uppercase">EL HOYADO Y TOSTADO</h3>
+            <p class="text-xs text-focaccia-cocoa/75 leading-relaxed max-w-xs mx-auto">
+              Con la yema de los dedos creamos los característicos hoyos, vertemos salmuera de sal de Maras y horneamos a alta temperatura sobre piedra.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MARQUESINA INSTAGRAM ================= -->
+  <section id="instagram" class="py-20 md:py-32 border-t border-focaccia-kraft/20 overflow-hidden bg-focaccia-cream scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-6 mb-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2 text-focaccia-kraft">
+            <i data-lucide="heart" class="w-5 h-5 text-focaccia-kraft fill-focaccia-kraft/20 animate-pulse"></i>
+            <span class="text-xs tracking-[0.2em] font-title font-bold uppercase">Nuestra Comunidad</span>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-title font-black tracking-wide">MOMENTOS LIMA</h2>
+        </div>
+        <a href="https://www.instagram.com/lima.focacceria/?hl=es" target="_blank" rel="noopener" class="inline-flex items-center text-xs font-title font-bold tracking-widest text-focaccia-cocoa hover:text-focaccia-kraft transition-colors">
+          SEGUIR EN INSTAGRAM <i data-lucide="arrow-up-right" class="w-4 h-4 ml-2"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Carrusel de movimiento continuo -->
+    <div class="w-full relative overflow-hidden py-4 select-none">
+      <div class="animate-marquee-infinite flex gap-8">
+        
+        <!-- Post 1 -->
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[-1.5deg]" onclick="openInstaModal(1)">
+          <img src="lima1.jpeg" class="w-full h-full object-cover pointer-events-none" alt="Momentos Lima 1" onerror="this.src='https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop'">
+          <div class="absolute inset-0 bg-focaccia-cocoa/30 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-6 text-focaccia-cream text-sm font-semibold">
+            <span class="flex items-center"><i data-lucide="heart" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 412</span>
+            <span class="flex items-center"><i data-lucide="message-circle" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 24</span>
+          </div>
+        </div>
+
+        <!-- Post 2 -->
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[2deg]" onclick="openInstaModal(2)">
+          <img src="lima2.jpeg" class="w-full h-full object-cover pointer-events-none" alt="Momentos Lima 2" onerror="this.src='https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop'">
+          <div class="absolute inset-0 bg-focaccia-cocoa/30 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-6 text-focaccia-cream text-sm font-semibold">
+            <span class="flex items-center"><i data-lucide="heart" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 589</span>
+            <span class="flex items-center"><i data-lucide="message-circle" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 41</span>
+          </div>
+        </div>
+
+        <!-- Post 3 -->
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[-2.5deg]" onclick="openInstaModal(3)">
+          <img src="lima3.jpeg" class="w-full h-full object-cover pointer-events-none" alt="Momentos Lima 3" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop'">
+          <div class="absolute inset-0 bg-focaccia-cocoa/30 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-6 text-focaccia-cream text-sm font-semibold">
+            <span class="flex items-center"><i data-lucide="heart" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 324</span>
+            <span class="flex items-center"><i data-lucide="message-circle" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 18</span>
+          </div>
+        </div>
+
+        <!-- Post 4 -->
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[1.5deg]" onclick="openInstaModal(4)">
+          <img src="lima4.jpeg" class="w-full h-full object-cover pointer-events-none" alt="Momentos Lima 4" onerror="this.src='https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=600&auto=format&fit=crop'">
+          <div class="absolute inset-0 bg-focaccia-cocoa/30 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-6 text-focaccia-cream text-sm font-semibold">
+            <span class="flex items-center"><i data-lucide="heart" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 672</span>
+            <span class="flex items-center"><i data-lucide="message-circle" class="w-4 h-4 mr-1.5 fill-focaccia-cream"></i> 55</span>
+          </div>
+        </div>
+
+        <!-- Duplicados para loop infinito perfecto -->
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[-1.5deg]" onclick="openInstaModal(1)">
+          <img src="lima1.jpeg" class="w-full h-full object-cover" alt="Momentos Lima 1 Duplicado" onerror="this.src='https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop'">
+        </div>
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[2deg]" onclick="openInstaModal(2)">
+          <img src="lima2.jpeg" class="w-full h-full object-cover" alt="Momentos Lima 2 Duplicado" onerror="this.src='https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop'">
+        </div>
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[-2.5deg]" onclick="openInstaModal(3)">
+          <img src="lima3.jpeg" class="w-full h-full object-cover" alt="Momentos Lima 3 Duplicado" onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop'">
+        </div>
+        <div class="relative w-72 md:w-80 aspect-square rounded-2xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 bg-focaccia-kraft/10 rotate-[1.5deg]" onclick="openInstaModal(4)">
+          <img src="lima4.jpeg" class="w-full h-full object-cover" alt="Momentos Lima 4 Duplicado" onerror="this.src='https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=600&auto=format&fit=crop'">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RECOMENDACIONES DE LOS COMENSALES ================= -->
+  <section class="py-20 md:py-32 bg-[#FAF9F6] border-t border-focaccia-kraft/20">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-3 mb-16">
+        <span class="text-[10px] tracking-[0.3em] font-title font-bold text-focaccia-kraft uppercase block">Voces Locales</span>
+        <h2 class="text-3xl font-title font-black tracking-wide">RECOMENDACIONES DEL DÍA</h2>
+        <p class="text-xs md:text-sm text-focaccia-cocoa/80">Opiniones reales de amantes de la buena mesa que visitan a diario nuestro rincón artesanal en Miraflores.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Testimonio 1 -->
+        <div class="bg-focaccia-cream p-8 rounded-2xl border border-focaccia-kraft/20 shadow-sm flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex text-amber-600 gap-1">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+            </div>
+            <p class="text-sm text-focaccia-cocoa/90 italic font-medium leading-relaxed">
+              "La Mortadella di Bologna con pistacho es un viaje de ida. La miga de la focaccia es ridículamente aireada y crujiente en la base. ¡La mejor de Lima sin dudas!"
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 pt-4 border-t border-focaccia-kraft/10">
+            <div class="w-10 h-10 rounded-full bg-focaccia-kraft/25 flex items-center justify-center font-title font-bold text-xs text-focaccia-cocoa">
+              AV
+            </div>
+            <div>
+              <h4 class="font-title font-bold text-xs">Andrea Valenzuela</h4>
+              <span class="text-[10px] uppercase text-focaccia-kraft tracking-wider font-semibold">Cliente Frecuente</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonio 2 -->
+        <div class="bg-focaccia-cream p-8 rounded-2xl border border-focaccia-kraft/20 shadow-sm flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex text-amber-600 gap-1">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+            </div>
+            <p class="text-sm text-focaccia-cocoa/90 italic font-medium leading-relaxed">
+              "Me encanta pasar por su local de la calle Juan de la Fuente por un sándwich caprese y un Cold Brew a media tarde. El aroma del aceite de oliva y la madera te abraza."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 pt-4 border-t border-focaccia-kraft/10">
+            <div class="w-10 h-10 rounded-full bg-focaccia-kraft/25 flex items-center justify-center font-title font-bold text-xs text-focaccia-cocoa">
+              MB
+            </div>
+            <div>
+              <h4 class="font-title font-bold text-xs">Mateo Benavides</h4>
+              <span class="text-[10px] uppercase text-focaccia-kraft tracking-wider font-semibold">Food Explorer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonio 3 -->
+        <div class="bg-focaccia-cream p-8 rounded-2xl border border-focaccia-kraft/20 shadow-sm flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex text-amber-600 gap-1">
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-amber-600 stroke-none"></i>
+            </div>
+            <p class="text-sm text-focaccia-cocoa/90 italic font-medium leading-relaxed">
+              "La focaccia dulce con Nutella y fresas es el secreto mejor guardado de Miraflores. El equilibrio entre el dulzor y ese sutil toque de sal marina es perfecto."
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 pt-4 border-t border-focaccia-kraft/10">
+            <div class="w-10 h-10 rounded-full bg-focaccia-kraft/25 flex items-center justify-center font-title font-bold text-xs text-focaccia-cocoa">
+              SL
+            </div>
+            <div>
+              <h4 class="font-title font-bold text-xs">Sofía Loli</h4>
+              <span class="text-[10px] uppercase text-focaccia-kraft tracking-wider font-semibold">Focaccia Lover</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECCIÓN Y CONTACTO ================= -->
+  <section id="contacto" class="py-20 border-t border-focaccia-kraft/20 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-5 space-y-8">
+          <div class="space-y-4">
+            <span class="text-[10px] md:text-xs tracking-[0.3em] font-title font-bold text-focaccia-kraft uppercase block">Te Esperamos</span>
+            <h2 class="text-3xl font-title font-black tracking-wide">EL LOCAL EN MIRAFLORES</h2>
+          </div>
+
+          <p class="text-sm text-focaccia-cocoa/80 leading-relaxed">
+            Nuestra barra y despacho de panadería se encuentra en una hermosa casona recuperada en el corazón de Miraflores. Puedes pasar por tu focaccia caliente o disfrutar de una tarde en nuestro patio trasero minimalista.
+          </p>
+
+          <div class="space-y-6 pt-4 text-xs font-semibold">
+            <div class="flex items-start space-x-4">
+              <i data-lucide="map-pin" class="w-5 h-5 text-focaccia-kraft flex-shrink-0 mt-0.5"></i>
+              <div>
+                <span class="block uppercase tracking-wider mb-1">DIRECCIÓN</span>
+                <span class="text-focaccia-cocoa/75 font-normal">Juan de la Fuente 383, Miraflores, Lima, Perú</span>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <i data-lucide="clock" class="w-5 h-5 text-focaccia-kraft flex-shrink-0 mt-0.5"></i>
+              <div>
+                <span class="block uppercase tracking-wider mb-1">HORARIOS</span>
+                <span class="text-focaccia-cocoa/75 font-normal block">Martes a Sábado: 09:00 AM — 09:00 PM</span>
+                <span class="text-focaccia-cocoa/75 font-normal block">Domingos: 09:00 AM — 07:45 PM</span>
+                <span class="text-[#4A3525]/75 font-normal block italic text-[10px] mt-0.5">Lunes cerrado por descanso de masa madre</span>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <i data-lucide="phone" class="w-5 h-5 text-focaccia-kraft flex-shrink-0 mt-0.5"></i>
+              <div>
+                <span class="block uppercase tracking-wider mb-1">DELIVERY DIRECTO</span>
+                <span class="text-focaccia-cocoa/75 font-normal block">937743015</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mapa interactivo de Google Maps real para Juan de la Fuente 383, Miraflores -->
+        <div class="lg:col-span-7">
+          <div class="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-focaccia-kraft/40 shadow-md">
+            <iframe class="w-full h-full border-0" 
+              src="https://maps.google.com/maps?q=Lima%20Focacceria,%20Juan%20de%20la%20Fuente%20383,%20Miraflores,%20Lima,%20Per%C3%BA&t=&z=17&ie=UTF8&iwloc=&output=embed" 
+              allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PIE DE PÁGINA (FOOTER) ================= -->
+  <footer class="bg-focaccia-cocoa text-[#FAF9F6] py-16 border-t border-focaccia-kraft/15">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        
+        <!-- Branding con logo oficial -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <!-- Filtro blanco al logo para que resalte elegante en el fondo oscuro -->
+            <img src="Gemini_Generated_Image_8h8qyp8h8qyp8h8q.png" alt="Lima Focacceria Footer Logo" class="h-14 w-auto object-contain brightness-0 invert" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+            <div class="hidden flex items-center gap-2">
+              <div class="h-8 w-8 flex items-center justify-center bg-focaccia-cream rounded text-focaccia-cocoa font-title font-black text-sm">
+                L
+              </div>
+              <span class="font-title font-black text-xs tracking-widest text-focaccia-cream uppercase">LIMA FOCACCERIA</span>
+            </div>
+          </div>
+          <p class="text-xs text-[#FAF9F6]/70 leading-relaxed pt-2">
+            Focaccias artesanales premium horneadas pacientemente para brindar la máxima ligereza y una textura inconfundible.
+          </p>
+          <!-- Redes Sociales Oficiales del Pie de Página (SVGs puros y nativos para máxima visibilidad) -->
+          <div class="flex items-center space-x-4 pt-3">
+            <a href="https://www.instagram.com/lima.focacceria/?hl=es" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-focaccia-cream hover:bg-focaccia-kraft hover:text-focaccia-cocoa transition-all duration-300" aria-label="Siguenos en Instagram">
+              <svg class="w-5 h-5 stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=51937743015" target="_blank" rel="noopener" class="text-xs text-focaccia-cream hover:text-focaccia-kraft font-title font-bold tracking-widest transition-colors duration-300 py-2">
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Enlaces Rápidos -->
+        <div class="space-y-4">
+          <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">MENÚ</h4>
+          <ul class="space-y-2 text-xs text-[#FAF9F6]/80 font-medium">
+            <li><a href="#concepto" class="hover:text-focaccia-kraft transition-colors">El Concepto</a></li>
+            <li><a href="#carta" class="hover:text-focaccia-kraft transition-colors">La Carta</a></li>
+            <li><a href="#proceso" class="hover:text-focaccia-kraft transition-colors">Proceso Artesano</a></li>
+            <li><a href="#instagram" class="hover:text-focaccia-kraft transition-colors">Momentos Lima</a></li>
+          </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="space-y-4">
+          <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">CONTACTO</h4>
+          <ul class="space-y-2 text-xs text-[#FAF9F6]/80">
+            <li>Juan de la Fuente 383, Miraflores</li>
+            <li>hola@limafocacceria.pe</li>
+            <li>937743015</li>
+          </ul>
+        </div>
+
+        <!-- Newsletter del Club -->
+        <div class="space-y-4">
+          <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">CLUB DEL HORNO</h4>
+          <p class="text-xs text-[#FAF9F6]/75">Inscríbete para enterarte de recetas secretas, días de horneados especiales y eventos.</p>
+          <form onsubmit="subscribeNewsletter(event)" class="flex gap-2">
+            <input type="email" required placeholder="Tu correo" class="bg-transparent border border-focaccia-kraft/55 rounded-xl px-3 py-2 text-xs text-focaccia-cream placeholder-focaccia-cream/40 w-full focus:border-focaccia-kraft">
+            <button type="submit" class="bg-focaccia-kraft text-focaccia-cocoa font-title font-bold text-[10px] tracking-wider px-4 py-2 rounded-xl hover:bg-focaccia-cream hover:text-focaccia-cocoa transition-colors">OK</button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="pt-8 border-t border-t-focaccia-kraft/15 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-[#FAF9F6]/50 uppercase tracking-widest font-semibold">
+        <span>&copy; 2026 Lima Focacceria. Todos los derechos reservados.</span>
+        <span>Hecho con amor y masa madre en Lima, Perú</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= ELEMENTOS EMERGENTES (CARRITO Y MODALES) ================= -->
+  
+  <div id="cart-sidebar" class="fixed inset-0 z-50 overflow-hidden flex custom-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Backdrop translúcido -->
+      <div class="absolute inset-0 bg-focaccia-cocoa/40 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div class="pointer-events-auto w-screen max-w-md bg-focaccia-cream border-l border-focaccia-kraft/30 flex flex-col">
+          
+          <!-- Header del Carrito -->
+          <div class="px-6 py-6 border-b border-focaccia-kraft/20 flex items-center justify-between">
+            <h2 class="font-title font-bold text-sm tracking-widest text-focaccia-cocoa uppercase">MI BOLSA</h2>
+            <button onclick="toggleCart()" class="p-2 text-focaccia-cocoa hover:text-focaccia-kraft transition-colors">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <!-- Items del Carrito -->
+          <div id="cart-items" class="flex-1 overflow-y-auto px-6 py-6 space-y-6 no-scrollbar">
+            <div class="text-center py-20 text-focaccia-cocoa/50 space-y-4">
+              <i data-lucide="shopping-basket" class="w-12 h-12 mx-auto stroke-[1.2]"></i>
+              <p class="font-title font-semibold tracking-wider text-xs">Tu bolsa está vacía</p>
+              <button onclick="toggleCart(); smoothScrollToSelector('#carta')" class="text-xs text-focaccia-kraft underline hover:text-focaccia-cocoa">Ver la carta hoy</button>
+            </div>
+          </div>
+
+          <!-- Footer del Carrito -->
+          <div class="px-6 py-6 border-t border-focaccia-kraft/20 bg-[#FAF9F6]">
+            <div class="flex justify-between items-center text-sm font-semibold text-focaccia-cocoa mb-6">
+              <span class="tracking-widest uppercase text-xs">Subtotal</span>
+              <span id="cart-subtotal" class="font-title font-black text-lg text-focaccia-kraft">S/ 0.00</span>
+            </div>
+            <p class="text-[10px] text-focaccia-cocoa/60 leading-normal mb-6">
+              El pedido se genera con tus productos seleccionados y te conecta de inmediato con nosotros por WhatsApp para coordinar la entrega en Miraflores y distritos aledaños.
+            </p>
+            <button onclick="sendOrderWhatsApp()" class="w-full py-4 bg-focaccia-cocoa text-focaccia-cream text-xs font-title font-bold tracking-widest rounded-xl hover:bg-focaccia-kraft hover:text-focaccia-cream transition-colors duration-300">
+              PEDIR POR WHATSAPP
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-focaccia-cocoa/40 backdrop-blur-sm custom-hidden">
+    <div class="bg-focaccia-cream max-w-2xl w-full rounded-2xl overflow-hidden border border-focaccia-kraft/30 shadow-2xl relative flex flex-col md:flex-row">
+      
+      <!-- Botón de Cerrar -->
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 p-2 rounded-full bg-focaccia-cream/80 backdrop-blur-sm border border-focaccia-kraft/35 text-focaccia-cocoa hover:bg-focaccia-cocoa hover:text-focaccia-cream transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <!-- Imagen -->
+      <div class="w-full md:w-1/2 aspect-square bg-focaccia-kraft/10 relative">
+        <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+        <span id="modal-badge" class="absolute top-4 left-4 bg-focaccia-cocoa text-focaccia-cream text-[9px] font-title font-black tracking-widest px-2.5 py-1.5 rounded-md uppercase"></span>
+      </div>
+
+      <!-- Detalles -->
+      <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between max-h-[85vh] overflow-y-auto no-scrollbar">
+        <div class="space-y-4">
+          <div class="space-y-1">
+            <span id="modal-category" class="text-[9px] tracking-[0.25em] font-title font-black text-focaccia-kraft uppercase"></span>
+            <h3 id="modal-name" class="font-title font-black text-xl text-focaccia-cocoa tracking-wide"></h3>
+          </div>
+          <p id="modal-price" class="font-title font-black text-lg text-focaccia-kraft"></p>
+          <p id="modal-desc" class="text-xs text-focaccia-cocoa/80 leading-relaxed"></p>
+          
+          <!-- CONFIGURADOR CREA TU FOCACCIA (Se muestra de forma condicional) -->
+          <div id="custom-focaccia-builder" class="space-y-4 pt-4 border-t border-focaccia-kraft/20 hidden">
+            <!-- 1. BASE -->
+            <div class="space-y-2">
+              <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">1. ELIGE LA BASE</span>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="setCustomBase('Romero')" id="base-romero" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Romero</button>
+                <button onclick="setCustomBase('Rústica')" id="base-rustica" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Rústica</button>
+              </div>
+            </div>
+
+            <!-- 2. PROTEÍNA -->
+            <div class="space-y-2">
+              <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">2. ELIGE LA PROTEÍNA</span>
+              <div class="grid grid-cols-2 gap-2 text-left">
+                <button onclick="setCustomProtein('Vegetariana', 0)" id="prot-veg" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Vegetariana (+S/ 0)</button>
+                <button onclick="setCustomProtein('Prosciutto', 5)" id="prot-pro" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Prosciutto (+S/ 5)</button>
+                <button onclick="setCustomProtein('Salame', 2)" id="prot-sal" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Salame (+S/ 2)</button>
+                <button onclick="setCustomProtein('Roast Beef', 4)" id="prot-roa" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Roast Beef (+S/ 4)</button>
+                <button onclick="setCustomProtein('Jamón del País', 2)" id="prot-pais" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Jamón del País (+S/ 2)</button>
+                <button onclick="setCustomProtein('Jamón de Pierna', 1)" id="prot-pier" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Jamón de Pierna (+S/ 1)</button>
+              </div>
+            </div>
+
+            <!-- 3. QUESO -->
+            <div class="space-y-2">
+              <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">3. ELIGE EL QUESO</span>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="setCustomCheese('Stracciatella')" id="q-stra" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Stracciatella</button>
+                <button onclick="setCustomCheese('Provolone')" id="q-prov" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Provolone</button>
+                <button onclick="setCustomCheese('Mozzarella')" id="q-mozz" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Mozzarella</button>
+                <button onclick="setCustomCheese('Gouda')" id="q-gou" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Gouda</button>
+              </div>
+            </div>
+
+            <!-- 4. TOPPINGS -->
+            <div class="space-y-2">
+              <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">4. TOPPINGS (MÁXIMO 3)</span>
+              <div class="grid grid-cols-2 gap-2 text-left">
+                <button onclick="toggleCustomTopping('Tomates Confitados')" id="top-tom" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Tomates Confit.</button>
+                <button onclick="toggleCustomTopping('Albahaca')" id="top-alba" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Albahaca</button>
+                <button onclick="toggleCustomTopping('Arúgula')" id="top-aru" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Arúgula</button>
+                <button onclick="toggleCustomTopping('Higos')" id="top-hig" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Higos</button>
+                <button onclick="toggleCustomTopping('Cebolla Caramelizada')" id="top-ceb" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Cebolla Caram.</button>
+                <button onclick="toggleCustomTopping('Palta')" id="top-pal" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10 text-left">Palta</button>
+              </div>
+            </div>
+
+            <!-- 5. SALSAS -->
+            <div class="space-y-2">
+              <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">5. ELIGE SALSAS</span>
+              <div class="grid grid-cols-2 gap-2">
+                <button onclick="setCustomSauce('Pesto')" id="s-pesto" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Pesto</button>
+                <button onclick="setCustomSauce('Alioli')" id="s-alioli" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Alioli</button>
+                <button onclick="setCustomSauce('Mostaza Especial')" id="s-mosta" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Mostaza Especial</button>
+                <button onclick="setCustomSauce('Reducción Balsámico')" id="s-balsa" class="p-2 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Red. Balsámico</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SELECTOR DE GASEOSA (Se muestra para el producto gaseosa) -->
+          <div id="soda-selector-panel" class="space-y-2 pt-4 border-t border-focaccia-kraft/20 hidden">
+            <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">Elige tu gaseosa</span>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="selectSodaOption('Inka Kola')" id="soda-inka" class="p-2.5 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Inka Kola</button>
+              <button onclick="selectSodaOption('Coca-Cola')" id="soda-coca" class="p-2.5 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Coca-Cola</button>
+              <button onclick="selectSodaOption('Inka Kola Zero')" id="soda-inkaz" class="p-2.5 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Inka Kola Zero</button>
+              <button onclick="selectSodaOption('Coca-Cola Zero')" id="soda-cocaz" class="p-2.5 border border-focaccia-kraft rounded-lg text-xs font-semibold hover:bg-focaccia-kraft/10">Coca-Cola Zero</button>
+            </div>
+          </div>
+
+          <!-- Ingredientes en cápsulas estándar -->
+          <div id="modal-ingredients-container" class="space-y-2">
+            <span class="text-[9px] tracking-widest font-title font-bold uppercase text-focaccia-cocoa/60 block">Detalles destacados</span>
+            <div id="modal-ingredients" class="flex flex-wrap gap-1.5">
+              <!-- Dinámico -->
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-focaccia-kraft/20 mt-6 flex gap-3">
+          <button id="modal-add-btn" class="flex-1 py-3 bg-focaccia-cocoa text-focaccia-cream text-xs font-title font-bold tracking-widest rounded-xl hover:bg-focaccia-kraft hover:text-focaccia-cream transition-colors duration-300">
+            AÑADIR A LA BOLSA
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NOTIFICACIÓN TOAST MINIMALISTA -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-focaccia-cocoa text-focaccia-cream px-6 py-4 rounded-xl border border-focaccia-kraft/30 shadow-xl flex items-center space-x-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i data-lucide="check-circle" class="w-5 h-5 text-focaccia-kraft"></i>
+    <span id="toast-msg" class="text-xs font-title font-semibold tracking-wider uppercase">¡Producto agregado!</span>
+  </div>
+
+  <!-- ================= SCRIPTS DE INICIALIZACIÓN Y BASE DE DATOS ================= -->
+  <script>
+    // Base de datos del Menú
+    const menuData = [
+      // CATEGORÍA: CLÁSICAS (Únicamente los 6 autorizados)
+      {
+        id: 99,
+        name: "Crea tu Focaccia",
+        category: "clasicas",
+        price: 28.00,
+        tag: "Personalizado",
+        img: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop",
+        desc: "¡Tú eres el creador! Diseña tu sándwich de focaccia ideal eligiendo bases aromáticas de romero, embutidos premium, quesos cremosos y toppings sazonados con sal de Maras.",
+        ingredients: ["Base", "Proteína", "Queso", "Hasta 3 Toppings", "Salsas"]
+      },
+      {
+        id: 6,
+        name: "Roast Beef",
+        category: "clasicas",
+        price: 32.00,
+        tag: "Recomendado",
+        img: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop",
+        desc: "Finas tajadas de Roast beef premium cocido a término medio, mostaza especial de la casa, pepinillos encurtidos (pickles), cebolla blanca crocante, hojas frescas de lechuga orgánica y nuestra cremosa salsa alioli.",
+        ingredients: ["Roast beef", "Mostaza especial", "Pickles", "Alioli", "Cebolla", "Lechuga"]
+      },
+      {
+        id: 7,
+        name: "Burrata",
+        category: "clasicas",
+        price: 36.00,
+        tag: "Insignia",
+        img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=600&auto=format&fit=crop",
+        desc: "Una burrata entera sumamente cremosa e hilada artesanalmente, pesto casero de albahaca fresca y piñones, arúgula baby crocante y una reducción de aceto balsámico de Módena.",
+        ingredients: ["Burrata entera", "Pesto artesanal", "Arúgula baby", "Reducción balsámica"]
+      },
+      {
+        id: 14,
+        name: "Tarta de Queso",
+        category: "clasicas",
+        price: 20.00,
+        tag: "Clásico Dulce",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+        desc: "Nuestra aclamada tarta clásica de queso horneada diariamente, cremosa por dentro y tostada por fuera en su punto perfecto.",
+        ingredients: ["Estilo Vasco", "Horneado diario", "Cremosa"]
+      },
+      {
+        id: 19,
+        name: "Maracuyá & Hierba Buena",
+        category: "clasicas",
+        price: 10.00,
+        tag: "Refrescante",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Extracto concentrado de maracuyá de estación machacado con hojas aromáticas de hierba buena de nuestro huerto y un almíbar ligero.",
+        ingredients: ["Maracuyá natural", "Hierba Buena fresca", "Frío"]
+      },
+      {
+        id: 34,
+        name: "Capuccino",
+        category: "clasicas",
+        price: 9.00,
+        tag: "Especialidad",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Espresso de origen Cusco balanceado armoniosamente con leche texturizada y una densa corona de crema de leche fresca.",
+        ingredients: ["Café Cusco", "Espuma densa", "Leche entera"]
+      },
+
+      // CATEGORÍA: FOCACCIAS (Todos los 11 sándwiches completos)
+      {
+        id: 1, // Crea tu Focaccia también va primero en focaccias
+        name: "Crea tu Focaccia",
+        category: "focaccias",
+        price: 28.00,
+        tag: "Personalizado",
+        img: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop",
+        desc: "¡Tú eres el creador! Diseña tu sándwich de focaccia ideal eligiendo bases aromáticas de romero, embutidos premium, quesos cremosos y toppings sazonados con sal de Maras.",
+        ingredients: ["Base", "Proteína", "Queso", "Hasta 3 Toppings", "Salsas"]
+      },
+      {
+        id: 2,
+        name: "Prosciutto",
+        category: "focaccias",
+        price: 33.00,
+        tag: "Premium",
+        img: "https://images.unsplash.com/photo-1541532713592-79a0317b6b77?q=80&w=600&auto=format&fit=crop",
+        desc: "Finas láminas de jamón prosciutto italiano premium curado, salsa artesanal de tomate pomodoro, queso crema batido, notes de queso azul gourmet, arúgula baby fresca y un generoso chorro de aceite de oliva extra virgen.",
+        ingredients: ["Prosciutto", "Salsa de tomate", "Queso crema", "Queso azul", "Arúgula", "Aceite de oliva"]
+      },
+      {
+        id: 3,
+        name: "Salame",
+        category: "focaccias",
+        price: 29.00,
+        tag: "Tradicional",
+        img: "https://images.unsplash.com/photo-1629978418042-14f877c8efb1?q=80&w=600&auto=format&fit=crop",
+        desc: "Salame milano cortado fino, base de queso crema ligero, pimientos rojos asados a la leña, queso parmesano madurado, cebolla blanca, lechuga crocante y aderezo especial.",
+        ingredients: ["Salame", "Queso crema", "Pimientos asados", "Queso parmesano", "Cebolla", "Lechuga"]
+      },
+      {
+        id: 4,
+        name: "Cebolla Caramelizada",
+        category: "focaccias",
+        price: 27.00,
+        tag: "Vegetariana",
+        img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
+        desc: "Una mezcla quesera espectacular de queso Gouda and queso Mozzarella derretidos al horno, coronada con cebolla caramelizada artesanalmente a fuego lento y alioli rústico.",
+        ingredients: ["Queso Gouda", "Queso Mozzarella", "Cebolla caramelizada", "Alioli"]
+      },
+      {
+        id: 5,
+        name: "2 Jamones",
+        category: "focaccias",
+        price: 28.00,
+        tag: "Clásico",
+        img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
+        desc: "Sándwich relleno de jamón de pierna curado y jamón inglés premium, cebolla blanca en juliana, hojas frescas de lechuga y nuestra salsa golf especial aderezada con eneldo fresco.",
+        ingredients: ["Jamón de pierna", "Jamón inglés", "Cebolla blanca", "Lechuga", "Salsa golf de eneldo"]
+      },
+      {
+        id: 60, //ID alternativo para focaccias
+        name: "Roast Beef",
+        category: "focaccias",
+        price: 32.00,
+        tag: "Sabor Intenso",
+        img: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop",
+        desc: "Finas tajadas de Roast beef premium cocido a término medio, mostaza especial de la casa, pepinillos encurtidos (pickles), cebolla blanca crocante, hojas frescas de lechuga orgánica y nuestra cremosa salsa alioli.",
+        ingredients: ["Roast beef", "Mostaza especial", "Pickles", "Alioli", "Cebolla", "Lechuga"]
+      },
+      {
+        id: 70, //ID alternativo para focaccias
+        name: "Burrata",
+        category: "focaccias",
+        price: 36.00,
+        tag: "Súper Cremosa",
+        img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=600&auto=format&fit=crop",
+        desc: "Una burrata entera sumamente cremosa e hilada artesanalmente, pesto casero de albahaca fresca y piñones, arúgula baby crocante y una reducción de aceto balsámico de Módena.",
+        ingredients: ["Burrata entera", "Pesto artesanal", "Arúgula baby", "Reducción balsámica"]
+      },
+      {
+        id: 8,
+        name: "Butifarra",
+        category: "focaccias",
+        price: 29.00,
+        tag: "Sabor Peruano",
+        img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
+        desc: "Jamón del país 100% artesanal elaborado en casa, lechuga crocante de cultivo orgánico, sarza criolla de cebolla con limón y ají limo, alioli clásico y mostaza especial de la casa.",
+        ingredients: ["Jamón del país", "Lechuga", "Sarza de cebolla", "Alioli", "Mostaza especial"]
+      },
+      {
+        id: 9,
+        name: "Apaltado",
+        category: "focaccias",
+        price: 24.00,
+        tag: "Saludable",
+        img: "https://images.unsplash.com/photo-1541532713592-79a0317b6b77?q=80&w=600&auto=format&fit=crop",
+        desc: "Abundante palta hass en rodajas perfectas, sazonada con finas escamas de sal de Maras, ajonjolí negro tostado y una suave reducción de aceto balsámico.",
+        ingredients: ["Palta", "Sal de Maras", "Ajonjolí", "Reducción de balsámico"]
+      },
+      {
+        id: 10,
+        name: "Jamón y Queso",
+        category: "focaccias",
+        price: 23.00,
+        tag: "Tostado",
+        img: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop",
+        desc: "Clásico tostado caliente de jamón de pierna ahumado y abundante queso gouda derretido, untado con mantequilla fina y un toque de nuestro alioli de la casa.",
+        ingredients: ["Jamón de pierna", "Queso gouda", "Mantequilla", "Alioli"]
+      },
+      {
+        id: 11,
+        name: "Caprese",
+        category: "focaccias",
+        price: 24.00,
+        tag: "Vegetariana",
+        img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=600&auto=format&fit=crop",
+        desc: "Pesto rústico de la casa, queso mozzarella fresco derretido en horno y deliciosos tomates confitados con aceite de oliva extra virgen y ajo asado.",
+        ingredients: ["Pesto", "Queso mozzarella", "Tomates confitados"]
+      },
+
+      // CATEGORÍA: POSTRES
+      {
+        id: 12,
+        name: "Media Luna con Jamón y Queso",
+        category: "postres",
+        price: 14.00,
+        tag: "Estilo Argentino",
+        img: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=600&auto=format&fit=crop",
+        desc: "Deliciosa medialuna de manteca tostada, rellena de jamón de pierna curado y queso gouda derretido.",
+        ingredients: ["Medialuna dulce", "Jamón", "Queso derretido"]
+      },
+      {
+        id: 13,
+        name: "Media Luna",
+        category: "postres",
+        price: 8.00,
+        tag: "Clásica",
+        img: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=600&auto=format&fit=crop",
+        desc: "Clásica medialuna artesanal de masa dulce y hojaldrada, pintada con un almíbar brillante de la casa.",
+        ingredients: ["Medialuna dulce", "Hojaldre artesano", "Almíbar"]
+      },
+      {
+        id: 140, //ID alternativo para postres
+        name: "Tarta de Queso",
+        category: "postres",
+        price: 20.00,
+        tag: "Favorito",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+        desc: "Tarta clásica de queso, horneada diariamente, cremosa por dentro y tostada por fuera en su punto perfecto.",
+        ingredients: ["Estilo vasco", "Horneado diario", "Cremoso"]
+      },
+      {
+        id: 15,
+        name: "Torta Trufada de Chocolate",
+        category: "postres",
+        price: 15.00,
+        tag: "Chocolate Belga",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+        desc: "Espectacular e intensa torta elaborada a base de chocolate belga bitter al 70%, con una textura suave y trufada irresistible.",
+        ingredients: ["Chocolate bitter", "Cacao belga", "Denso y suave"]
+      },
+      {
+        id: 16,
+        name: "Jar de Tiramisú",
+        category: "postres",
+        price: 17.00,
+        tag: "Especialidad en Tarro",
+        img: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop",
+        desc: "Clásicas bizcotelas italianas embebidas en café espresso de origen Cusco y licor amaretto, intercaladas con crema de mascarpone batido y espolvoreadas con cacao premium.",
+        ingredients: ["Bizcotelas", "Café Cusco", "Amaretto", "Queso Mascarpone"]
+      },
+      {
+        id: 17,
+        name: "Jar de Profitroles de Fudge",
+        category: "postres",
+        price: 15.00,
+        tag: "Novedad",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+        desc: "Una base de crema chantilly ligera, coronada con mini profiteroles crujientes rellenos de una suave crema pastelera casera y bañados de abundante fudge de chocolate caliente.",
+        ingredients: ["Crema pastelera", "Profiteroles", "Crema chantilly", "Fudge de chocolate"]
+      },
+      {
+        id: 18,
+        name: "Profiteroles x 2",
+        category: "postres",
+        price: 9.00,
+        tag: "Para compartir",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=600&auto=format&fit=crop",
+        desc: "Dos profiteroles rellenos, bañados con una mezcla exquisita de Fudge de la casa, crema Nutella cremosa y bombones finos de ganache de chocolate.",
+        ingredients: ["Profiteroles", "Fudge casero", "Nutella", "Ganache de chocolate"]
+      },
+
+      // CATEGORÍA: BEBIDAS (Frías primero, luego Calientes)
+      // -- BEBIDAS FRÍAS --
+      {
+        id: 190,
+        name: "Maracuyá & Hierba Buena",
+        category: "bebidas",
+        sub: "frias",
+        price: 10.00,
+        tag: "Fría",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Frascos refrescantes de maracuyá de estación machacada con hojas de hierba buena de nuestro huerto y un almíbar ligero de la casa.",
+        ingredients: ["Maracuyá", "Hierba Buena", "Hielo"]
+      },
+      {
+        id: 20,
+        name: "Aguas Andea",
+        category: "bebidas",
+        sub: "frias",
+        price: 4.50,
+        tag: "Agua de Origen",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Aguas andinas embotelladas directamente en su manantial de origen. Disponible en versiones con gas o sin gas.",
+        ingredients: ["Con gas", "Sin gas", "Pureza andina"]
+      },
+      {
+        id: 21,
+        name: "Gaseosas",
+        category: "bebidas",
+        sub: "frias",
+        price: 6.00,
+        tag: "Interactiva",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Tus gaseosas favoritas heladas. Selecciona tu tipo favorito: Inka Kola, Coca-Cola, Inka Kola Zero o Coca-Cola Zero.",
+        ingredients: ["Inka Kola", "Coca-Cola", "Inka Zero", "Coca Zero"]
+      },
+      {
+        id: 22,
+        name: "Iced Americano",
+        category: "bebidas",
+        sub: "frias",
+        price: 10.00,
+        tag: "Cold Coffee",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Dos cargas intensas de espresso de origen Cusco vertidas sobre abundante hielo y agua fresca purificada.",
+        ingredients: ["Café Cusco", "Espresso de origen", "Hielo"]
+      },
+      {
+        id: 23,
+        name: "Iced Moka",
+        category: "bebidas",
+        sub: "frias",
+        price: 14.00,
+        tag: "Fría Dulce",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Mezcla perfecta de nuestro espresso Cusco, jarabe concentrado de cacao bitter al 70%, leche helada y cubos de hielo.",
+        ingredients: ["Espresso", "Cacao bitter", "Leche", "Hielo"]
+      },
+      {
+        id: 24,
+        name: "Iced Latte",
+        category: "bebidas",
+        sub: "frias",
+        price: 12.00,
+        tag: "Fría Suave",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Cremosa combinación de leche entera muy fría de establo local y espresso Cusco vertido suavemente sobre hielo.",
+        ingredients: ["Espresso Cusco", "Leche entera", "Hielo"]
+      },
+      {
+        id: 25,
+        name: "Bebida Saborizada San Pellegrino",
+        category: "bebidas",
+        sub: "frias",
+        price: 14.00,
+        tag: "Importado",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Lata de gaseosa frutal de origen italiano. Elige tu opción: Aranciata (Naranja), Aranciata Rossa (Naranja Roja) o Melograno & Arancia (Granada y Naranja).",
+        ingredients: ["Importado", "Natural", "Refrescante"]
+      },
+      {
+        id: 26,
+        name: "Jugo de Naranja",
+        category: "bebidas",
+        sub: "frias",
+        price: 11.00,
+        tag: "100% Fruta",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Jugo natural de naranjas frescas exprimidas al momento, sin azúcares ni conservantes añadidos.",
+        ingredients: ["Naranjas frescas", "Exprimido al momento", "Vitaminas"]
+      },
+      {
+        id: 27,
+        name: "Jugo de Piña",
+        category: "bebidas",
+        sub: "frias",
+        price: 14.00,
+        tag: "Natural",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Jugo de piña golden dulce, licuado al instante y servido muy helado para conservar su textura espumosa.",
+        ingredients: ["Piña Golden", "100% Natural", "Frío"]
+      },
+      {
+        id: 28,
+        name: "Jugo de Fresa",
+        category: "bebidas",
+        sub: "frias",
+        price: 15.00,
+        tag: "Natural",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Jugo de fresas seleccionadas, licuado al instante con agua fresca purificada.",
+        ingredients: ["Fresas seleccionadas", "100% natural", "Fresco"]
+      },
+      {
+        id: 29,
+        name: "Jugo de Fresa con Leche",
+        category: "bebidas",
+        sub: "frias",
+        price: 16.00,
+        tag: "Cremoso",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Cremoso batido elaborado con fresas jugosas de estación y leche entera fresca del día.",
+        ingredients: ["Fresas de estación", "Leche entera", "Batido denso"]
+      },
+      {
+        id: 30,
+        name: "Frambuesa Spritz",
+        category: "bebidas",
+        sub: "frias",
+        price: 14.00,
+        tag: "Estación",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+        desc: "Cóctel refrescante sin alcohol elaborado con jarabe casero de frambuesas, agua gasificada San Pellegrino y un toque de menta fresca.",
+        ingredients: ["Frambuesa", "Menta", "Agua gasificada", "Sin alcohol"]
+      },
+
+      // -- BEBIDAS CALIENTES --
+      {
+        id: 31,
+        name: "Chocolate Caliente",
+        category: "bebidas",
+        sub: "calientes",
+        price: 14.00,
+        tag: "Caliente",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Chocolate caliente denso elaborado con cacao fino de aroma al 70%, leche texturizada y notas sutiles de canela y clavo.",
+        ingredients: ["Cacao 70%", "Leche texturizada", "Especias"]
+      },
+      {
+        id: 32,
+        name: "Moka",
+        category: "bebidas",
+        sub: "calientes",
+        price: 12.00,
+        tag: "Caliente",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Combinación armónica de nuestro espresso origen Cusco, salsa de chocolate bitter y leche texturizada al vapor.",
+        ingredients: ["Espresso", "Chocolate bitter", "Leche texturizada"]
+      },
+      {
+        id: 33,
+        name: "Infusiones La Fidelia",
+        category: "bebidas",
+        sub: "calientes",
+        price: 8.00,
+        tag: "Artesanal",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Tés e infusiones peruanas premium. Elige tu blend: Frutos rojos, menta, hierba luisa, manzanilla, anís, cedrón. Puedes pedirla en versión Iced a S/ 9.00.",
+        ingredients: ["Hierbas naturales", "La Fidelia", "Opciones variadas"]
+      },
+      {
+        id: 340, //ID alternativo caliente
+        name: "Espresso",
+        category: "bebidas",
+        sub: "calientes",
+        price: 7.00,
+        tag: "Origen",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Extracción densa de café premium origen Cusco con notas ácidas y dulces perfectas. También puedes pedirlo en versión Espresso Cortado a S/ 8.00.",
+        ingredients: ["Espresso simple", "Cusco 100% arábica"]
+      },
+      {
+        id: 35,
+        name: "Capuccino",
+        category: "bebidas",
+        sub: "calientes",
+        price: 9.00,
+        tag: "Caliente",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Espresso de origen Cusco balanceado armoniosamente con leche texturizada y una densa corona de crema de leche fresca.",
+        ingredients: ["Café Cusco", "Espuma densa", "Leche entera"]
+      },
+      {
+        id: 36,
+        name: "Café Americano",
+        category: "bebidas",
+        sub: "calientes",
+        price: 8.00,
+        tag: "Caliente",
+        img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600&auto=format&fit=crop",
+        desc: "Doble espresso de origen Cusco suavizado con agua caliente purificada, manteniendo el cuerpo aromático.",
+        ingredients: ["Espresso doble", "Agua purificada", "Aromático"]
+      }
+    ];
+
+    // Detalle de Posts de Instagram para el Modal Dinámico
+    const instaFeedDetails = {
+      1: {
+        title: "Miga Aireada",
+        text: "Miren esta miga. La clave detrás de la extrema ligereza de nuestra masa es el tiempo. 48 horas de fermentación en frío permite que los gases naturales formen burbujas hermosas y crujientes al tacto.",
+        likes: "412 likes",
+        comments: "Ver los 24 comentarios"
+      },
+      2: {
+        title: "La Casona Miraflores",
+        text: "Nuestra barra rústica de madera y el patio minimalista listos para recibirte. Diseñamos un espacio acogedor en Juan de la Fuente donde el aroma del pan recién horneado y la música ambiente te haga sentir en un rincón de Italia.",
+        likes: "589 likes",
+        comments: "Ver los 41 comentarios"
+      },
+      3: {
+        title: "Mortadella Fresca",
+        text: "Solo trabajamos con charcutería premium. Nuestra mortadela di Bologna es rebanada finamente al minuto de tu pedido para que mantenga toda su sedosidad y se funda armónicamente.",
+        likes: "324 likes",
+        comments: "Ver los 18 comentarios"
+      },
+      4: {
+        title: "Oro Líquido",
+        text: "Cada charola de nuestra focaccia lleva abundante aceite de oliva extra virgen de primera prensada en frío. No es un ingrediente más, es el alma de la textura dorada de nuestra corteza.",
+        likes: "672 likes",
+        comments: "Ver los 55 comentarios"
+      }
+    };
+
+    // Estado local de la aplicación
+    let cart = [];
+    
+    // Variables para el configurador de Crea tu Focaccia
+    let customBase = "Romero";
+    let customProtein = "Vegetariana";
+    let customProteinPrice = 0;
+    let customCheese = "Stracciatella";
+    let customToppings = [];
+    let customSauce = "Pesto";
+    let customPrice = 28.00;
+
+    // Opción seleccionada de Gaseosa
+    let selectedSodaOptionVal = "Inka Kola";
+
+    // Inicialización del DOM
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMenu('clasicas'); // Activar clásicas por defecto
+      try {
+        lucide.createIcons();
+      } catch(e) {
+        console.log("Error de carga sutil en iconos.");
+      }
+      initRobustNavigation();
+    });
+
+    // Función de Scroll Suave Personalizado (Control total del tiempo y aceleración elegante)
+    function smoothScrollTo(targetElement, duration = 1100) {
+      const header = document.querySelector('header');
+      const headerOffset = header ? header.offsetHeight : 80;
+      
+      const start = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      const rect = targetElement.getBoundingClientRect();
+      const targetPosition = rect.top + start - headerOffset;
+      const distance = targetPosition - start;
+      let startTime = null;
+
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function animationStep(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+        const nextScrollPosition = start + distance * ease;
+
+        window.scrollTo(0, nextScrollPosition);
+        document.documentElement.scrollTop = nextScrollPosition;
+        document.body.scrollTop = nextScrollPosition;
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animationStep);
+        }
+      }
+
+      requestAnimationFrame(animationStep);
+    }
+
+    function smoothScrollToSelector(selector) {
+      const target = document.querySelector(selector);
+      if (target) {
+        smoothScrollTo(target, 1100);
+      }
+    }
+
+    function initRobustNavigation() {
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          
+          if (targetId && targetId !== '#') {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              e.preventDefault();
+              smoothScrollTo(targetElement, 1100);
+            }
+          }
+        });
+      });
+    }
+
+    // Renderizado dinámico de la carta
+    function renderMenu(category) {
+      const grid = document.getElementById('menu-grid');
+      grid.style.opacity = 0;
+
+      setTimeout(() => {
+        let filtered = menuData.filter(item => item.category === category);
+
+        // Si es categoría bebidas, las organizamos con títulos (Frias primero, luego calientes)
+        if (category === 'bebidas') {
+          const frias = filtered.filter(item => item.sub === 'frias');
+          const calientes = filtered.filter(item => item.sub === 'calientes');
+
+          grid.className = "col-span-full space-y-12";
+          grid.innerHTML = `
+            <div class="space-y-6">
+              <h3 class="font-title font-black text-lg text-focaccia-kraft tracking-widest uppercase border-b border-focaccia-kraft/20 pb-2">BEBIDAS FRÍAS</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                ${frias.map(item => getProductHTML(item)).join('')}
+              </div>
+            </div>
+            <div class="space-y-6">
+              <h3 class="font-title font-black text-lg text-focaccia-kraft tracking-widest uppercase border-b border-focaccia-kraft/20 pb-2">BEBIDAS CALIENTES</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                ${calientes.map(item => getProductHTML(item)).join('')}
+              </div>
+            </div>
+          `;
+        } else {
+          // Categoría regular
+          grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300";
+          grid.innerHTML = filtered.map(item => getProductHTML(item)).join('');
+        }
+
+        // Estilos activos para botones de filtros
+        const filterBtns = ['clasicas', 'focaccias', 'postres', 'bebidas'];
+        filterBtns.forEach(btn => {
+          const el = document.getElementById(`btn-${btn}`);
+          if (btn === category) {
+            el.classList.add('text-focaccia-cocoa', 'border-focaccia-cocoa');
+            el.classList.remove('text-focaccia-cocoa/50', 'border-transparent');
+          } else {
+            el.classList.remove('text-focaccia-cocoa', 'border-focaccia-cocoa');
+            el.classList.add('text-focaccia-cocoa/50', 'border-transparent');
+          }
+        });
+
+        grid.style.opacity = 1;
+        try {
+          lucide.createIcons();
+        } catch(e) {}
+      }, 200);
+    }
+
+    function getProductHTML(item) {
+      return `
+        <div class="group cursor-pointer space-y-4" onclick="openProductModal(${item.id})">
+          <div class="aspect-square w-full bg-focaccia-kraft/10 rounded-2xl overflow-hidden relative shadow-sm transition-shadow hover:shadow-md img-zoom">
+            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover">
             
-            const [quoteData, setQuoteData] = useState({ 
-                city: 'paris', 
-                pax: 100, 
-                foodType: 'costa', 
-                showType: 'none', 
-                hasVenue: true,
-                selectedVenueId: null 
-            });
+            ${item.tag ? `
+              <span class="absolute top-4 left-4 bg-focaccia-cream/95 backdrop-blur-sm border border-focaccia-kraft/30 text-focaccia-cocoa text-[9px] font-title font-bold tracking-wider px-2.5 py-1.5 rounded-md uppercase">
+                ${item.tag}
+              </span>
+            ` : ''}
 
-            const showOptions = {
-                none: { name: "Sin Espectáculo", region: "", price: 0 },
-                costa: { name: "Susurro de Costa", region: "Costa", price: 350 },
-                sierra: { name: "Ritual de los Andes", region: "Sierra", price: 450 },
-                selva: { name: "Latido de Selva", region: "Selva", price: 400 },
-                gala: { name: "Gala Imperial ÂMÉ", region: "Todas las regiones", price: 750 }
-            };
+            <div class="absolute inset-0 bg-focaccia-cocoa/5 group-hover:bg-focaccia-cocoa/20 transition-all duration-300 flex items-end justify-between p-4 opacity-0 group-hover:opacity-100">
+              <button onclick="event.stopPropagation(); handleQuickAdd(${item.id})" class="bg-focaccia-cream text-focaccia-cocoa px-4 py-2 text-[10px] font-title font-bold tracking-widest rounded-md hover:bg-focaccia-cocoa hover:text-focaccia-cream transition-colors duration-300 shadow-lg">
+                ${item.id === 99 || item.id === 1 ? 'CONFIGURAR' : 'AÑADIR RÁPIDO'}
+              </button>
+            </div>
+          </div>
 
-            const t = {
-                es: {
-                    nav: { home: 'Inicio', catering: 'Catering', travel: 'Viajes', about: 'Nosotros', book: 'Reservar' },
-                    hero: { sub: 'Resplandor del alma a través de la cultura', title: 'La Experiencia Peruana', title2: 'en el corazón de Francia', btn1: 'Ver Catering', btn2: 'Explorar Viajes' },
-                    cat: { 
-                        tag: 'Autenticidad sin fronteras', 
-                        title: 'Banquete Peruano Premium', 
-                        desc: 'Llevamos la esencia de las mejores picanterías y restaurantes de todo el Perú directamente a tu evento en Francia. Show incluido a partir de 100 invitados.', 
-                        detail1: 'Chefs Peruanos',
-                        detail1Desc: 'Cocineros nativos formados en las mejores escuelas de gastronomía de Lima.',
-                        detail2: 'Show y Cultura',
-                        detail2Desc: 'Espectáculos en vivo que envuelven cada bocado en una atmósfera llena de vida.',
-                        btn: 'Cotizar Evento en Francia' 
-                    },
-                    quote: { 
-                        title: 'Cotización de Evento', city: 'Ciudad', pax: 'Invitados', food: 'Estilo de Cocina', show: 'Cultura & Danzas', venue: 'Localización', summary: 'Resumen', btnBook: 'Confirmar Reserva',
-                        subtotal: 'Subtotal Pax', total: 'Total Estimado', surchargeLabel: 'Gestión', groupLabel: 'Recargo Logística', bonusLabel: 'Bonificación Show', venueLabel: 'Local Elegido',
-                        statusIncl: 'INCLUIDO',
-                        venueOptions: { true: 'Tengo Local', false: 'Necesito Local' },
-                        foodOptions: { costa: 'Costa (Base)', sierra: 'Sierra (+10€/pax)', selva: 'Selva (+12€/pax)', mix: 'Herencia ÂMÉ (Todas las regiones) (+18€/pax)' },
-                        showTitles: { none: "Sin Espectáculo", costa: "Susurro de Costa", sierra: "Ritual de los Andes", selva: "Latido de Selva", gala: "Gala Imperial ÂMÉ" }
-                    },
-                    trips: { 
-                        title: 'Turismo Vivencial Gastronómico', 
-                        tag: 'Experiencias de Autor',
-                        desc: 'Viajes diseñados para paladares exigentes. Inmersión total desde el origen con servicios VIP incluidos.',
-                        packs: [
-                            { id: 'amazonas', title: "Ruta del Cacao y Café de Selva Alta", loc: "Amazonas & San Martín", price: "3,850€", img: "https://images.unsplash.com/photo-1596395350917-8e10d297926b?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Día 1: Aromas", title: "Cata en Finca Orgánica", desc: "Arribo y cata técnica de café de especialidad con baristas locales." }, { day: "Día 2: Aguas", title: "Trekking Gocta", desc: "Caminata privada hacia la catarata." }, { day: "Día 3: Historia", title: "Kuélap y almuerzo tradicional.", desc: "Visita a la fortaleza de Kuélap en teleférico." }], includes: ["Vuelos Internacionales", "SUV Lujo", "Hotel Boutique", "Guía VIP"] },
-                            { id: 'cusco', title: "Sabores Ancestrales del Valle Sagrado", loc: "Cusco & Urubamba", price: "4,900€", img: "https://images.unsplash.com/photo-1587595301140-5a4157d6928e?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Día 1: Tierra", title: "Maras & Picnic Gourmet", desc: "Visita a las salineras de Maras con picnic de lujo." }, { day: "Día 2: Ritual Pachamanca", title: "Cocina Ancestral", desc: "Participación en cocina bajo tierra con comunidades locales." }, { day: "Día 3: Legado", title: "Machu Picchu", desc: "Tren Hiram Bingham y cena gala frente a la ciudadela." }], includes: ["Tren Hiram Bingham", "Hotel Belmond", "Vuelos Internos", "Cena de Gala"] },
-                            { id: 'lima', title: "Lima: Epicentro Gastronómico Mundial", loc: "Lima Metropolitana", price: "2,950€", img: "https://images.unsplash.com/photo-1590426189563-7da9f7c05001?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Día 1: Origen", title: "Mercados Locales", desc: "Mercados y Masterclass de Ceviche con chef estrella." }, { day: "Día 2: Vanguardia", title: "Alta Cocina", desc: "Almuerzo y cena en los restaurantes N°1 mundiales." }, { day: "Día 3: Herencia", title: "Historia del Pisco", desc: "Casonas virreinales e Historia del Pisco con catas privadas." }], includes: ["Reserva VIP Central", "Transporte Lujo SUV", "Vuelos Internacionales", "Catas"] }
-                        ] 
-                    },
-                    about: { title: 'Nuestra Historia', p1: 'ÂMÉ nació del deseo de compartir la riqueza cultural del Perú con el mundo. Somos el puente entre la tradición milenaria y la sofisticación europea.', p2: 'Cada evento y cada viaje lleva nuestro sello de excelencia y respeto por las raíces que nos definen como cultura viva.', stat1: 'INSUMOS ORGÁNICOS', stat2: 'TRADICIÓN VIVA' },
-                    success: { title: '¡Muchas Gracias!', message: 'Su solicitud ha sido procesada con éxito bajo el sello ÂMÉ. Nos contactaremos en las próximas 24 horas.', btn: 'Cerrar y Volver al Inicio' },
-                    footer: { desc: 'ÂMÉ — Conectando las almas de Perú y Francia a través de la cultura y el sabor.', services: 'Servicios', contact: 'Contacto' },
-                    checkout: { title: 'Finalizar Compra', personalData: 'Datos del Cliente', fullName: 'Nombre Completo / Razón Social', email: 'Correo Electrónico', phone: 'Teléfono', paymentData: 'Pago Seguro', cardNumber: 'Número de Tarjeta', expiry: 'MM/AA', btnPay: 'CONFIRMAR Y PAGAR' }
-                },
-                en: {
-                    nav: { home: 'Home', catering: 'Catering', travel: 'Trips', about: 'About Us', book: 'Book Now' },
-                    hero: { sub: 'Soul radiance through culture', title: 'The Peruvian Experience', title2: 'in the heart of France', btn1: 'View Catering', btn2: 'Explore Trips' },
-                    cat: { 
-                        tag: 'Authenticity without borders', 
-                        title: 'Premium Peruvian Banquet', 
-                        desc: 'We bring the essence of the best picanterías and restaurants from all over Peru directly to your event in France. Show included for 100+ guests.', 
-                        detail1: 'Peruvian Chefs',
-                        detail1Desc: 'Native chefs trained in the best culinary schools of Lima.',
-                        detail2: 'Show & Culture',
-                        detail2Desc: 'Live performances that wrap every bite in a vibrant atmosphere.',
-                        btn: 'Get Event Quote in France' 
-                    },
-                    quote: { 
-                        title: 'Event Quotation', city: 'City', pax: 'Guests', food: 'Cuisine Style', show: 'Culture & Dance', venue: 'Location', summary: 'Summary', btnBook: 'Confirm Booking',
-                        subtotal: 'Pax Subtotal', total: 'Estimated Total', surchargeLabel: 'Management', groupLabel: 'Logistics Surcharge', bonusLabel: 'Show Bonus', venueLabel: 'Selected Venue',
-                        statusIncl: 'INCLUDED',
-                        venueOptions: { true: 'I have a venue', false: 'I need a venue' },
-                        foodOptions: { costa: 'Coast (Base)', sierra: 'Highlands (+10€/pax)', selva: 'Jungle (+12€/pax)', mix: 'ÂMÉ Heritage (All regions) (+18€/pax)' },
-                        showTitles: { none: "No Show", costa: "Coastal Whisper", sierra: "Andean Ritual", selva: "Jungle Heartbeat", gala: "ÂMÉ Imperial Gala" }
-                    },
-                    trips: { 
-                        title: 'Experiential Gastronomic Tourism', 
-                        tag: 'Author Experiences',
-                        desc: 'Travel designed for demanding palates. Total immersion from the origin with VIP services included.',
-                        packs: [
-                            { id: 'amazonas', title: "Cocoa and Coffee High Jungle Route", loc: "Amazonas & San Martín", price: "3,850€", img: "https://images.unsplash.com/photo-1596395350917-8e10d297926b?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Day 1: Scents", title: "Organic Farm Tasting", desc: "Arrival and technical specialty coffee tasting with local baristas." }, { day: "Day 2: Waters", title: "Gocta Trekking", desc: "Private hike to the waterfall." }, { day: "Day 3: History", title: "Kuelap Experience", desc: "Visit to Kuelap fortress via cable car and traditional lunch." }], includes: ["International Flights", "Luxury SUV", "Boutique Hotel", "VIP Guide"] },
-                            { id: 'cusco', title: "Ancestral Flavors of the Sacred Valley", loc: "Cusco & Urubamba", price: "4,900€", img: "https://images.unsplash.com/photo-1587595301140-5a4157d6928e?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Day 1: Earth", title: "Maras & Gourmet Picnic", desc: "Visit to Maras salt mines with luxury picnic." }, { day: "Day 2: Pachamanca", title: "Ancestral Cooking", desc: "Underground cooking ritual with local communities." }, { day: "Day 3: Legacy", title: "Machu Picchu", desc: "Hiram Bingham Train and gala dinner overlooking the citadel." }], includes: ["Hiram Bingham Train", "Belmond Hotel", "Internal Flights", "Gala Dinner"] },
-                            { id: 'lima', title: "Lima: Global Gastronomic Epicenter", loc: "Metropolitan Lima", price: "2,950€", img: "https://images.unsplash.com/photo-1590426189563-7da9f7c05001?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Day 1: Origin", title: "Local Markets", desc: "Markets and Ceviche Masterclass with a star chef." }, { day: "Day 2: Avant-Garde", title: "Fine Dining", desc: "Lunch and dinner at world-ranking No. 1 restaurants." }, { day: "Day 3: Heritage", title: "Pisco History", desc: "Colonial mansions and Pisco history with private tastings." }], includes: ["Central VIP Reservation", "Luxury SUV Transport", "International Flights", "Tastings"] }
-                        ] 
-                    },
-                    about: { title: 'Our Story', p1: 'ÂMÉ was born from the desire to share Peru\'s cultural richness with the world. We are the bridge between millenary tradition and European sophistication.', p2: 'Every event and every trip carries our seal of excellence and respect for the roots that define us as a living culture.', stat1: 'ORGANIC INGREDIENTS', stat2: 'LIVING TRADITION' },
-                    success: { title: 'Thank You!', message: 'Your request has been successfully processed under the ÂMÉ seal. We will contact you within 24 hours.', btn: 'Close and Return Home' },
-                    footer: { desc: 'ÂMÉ — Connecting the souls of Peru and France through culture and flavor.', services: 'Services', contact: 'Contact' },
-                    checkout: { title: 'Checkout', personalData: 'Client Data', fullName: 'Full Name / Company Name', email: 'Email Address', phone: 'Phone Number', paymentData: 'Secure Payment', cardNumber: 'Card Number', expiry: 'MM/YY', btnPay: 'CONFIRMER & PAY' }
-                },
-                fr: {
-                    nav: { home: 'Accueil', catering: 'Traiteur', travel: 'Voyages', about: 'À Propos', book: 'Réserver' },
-                    hero: { sub: 'L\'éclat de l\'âme à travers la culture', title: 'L\'Expérience Péruvienne', title2: 'au cœur de la France', btn1: 'Voir Traiteur', btn2: 'Explorer Voyages' },
-                    cat: { 
-                        tag: 'Authenticité sin frontières', 
-                        title: 'Banquet Péruvien Premium', 
-                        desc: 'Nous apportons l\'essence des meilleures picanterías du Pérou directamente à votre événement en France. Spectacle inclus dès 100 invités.', 
-                        detail1: 'Chefs Péruviens',
-                        detail1Desc: 'Chefs natifs formés dans les meilleures écoles de gastronomie de Lima.',
-                        detail2: 'Spectacle et Culture',
-                        detail2Desc: 'Spectacles vivants qui enveloppent chaque bouchée d\'une atmosphère vibrante.',
-                        btn: 'Devis Événement France' 
-                    },
-                    quote: { 
-                        title: 'Devis de l\'Événement', city: 'Ville', pax: 'Invités', food: 'Style de Cuisine', show: 'Culture et Danses', venue: 'Localisation', summary: 'Résumé', btnBook: 'Confirmer Réservation',
-                        subtotal: 'Sous-total Pax', total: 'Total Estimé', surchargeLabel: 'Gestion', groupLabel: 'Surcharge Logistique', bonusLabel: 'Bonus Spectacle', venueLabel: 'Lieu Choisi',
-                        statusIncl: 'INCLUS',
-                        venueOptions: { true: 'J\'ai un lieu', false: 'Besoin d\'un lieu' },
-                        foodOptions: { costa: 'Côte (Base)', sierra: 'Sierra (+10€/pax)', selva: 'Amazonie (+12€/pax)', mix: 'Héritage ÂMÉ (Toutes régions) (+18€/pax)' },
-                        showTitles: { none: "Pas de Spectacle", costa: "Murmure de la Côte", sierra: "Rituel des Andes", selva: "Battement de l'Amazonie", gala: "Gala Impérial ÂMÉ" }
-                    },
-                    trips: { 
-                        title: 'Tourisme Expérientiel Gastronomique', 
-                        tag: 'Expériences d\'Auteur',
-                        desc: 'Voyages conçus pour les palais exigeants. Immersion totale dès l\'origine avec services VIP inclus.',
-                        packs: [
-                            { id: 'amazonas', title: "Route du Cacao et du Café de la Haute Jungle", loc: "Amazonas & San Martín", price: "3,850€", img: "https://images.unsplash.com/photo-1596395350917-8e10d297926b?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Jour 1: Arômes", title: "Dégustation à la Ferme", desc: "Arrivée et dégustation technique de café de especialidad." }, { day: "Jour 2: Eaux", title: "Trekking Gocta", desc: "Randonnée privée vers la cascade." }, { day: "Jour 3: Histoire", title: "Expérience Kuélap", desc: "Visite de la forteresse de Kuélap et déjeuner traditionnel." }], includes: ["Vols Internationaux", "SUV de Luxe", "Hôtel Boutique", "Guide VIP"] },
-                            { id: 'cusco', title: "Saveurs Ancestrales de la Vallée Sacrée", loc: "Cusco & Urubamba", price: "4,900€", img: "https://images.unsplash.com/photo-1587595301140-5a4157d6928e?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Jour 1: Terre", title: "Maras & Pique-nique Gourmet", desc: "Visite des salines de Maras avec pique-nique de luxe." }, { day: "Jour 2: Pachamanca", title: "Cuisine Ancestrale", desc: "Participation à la cuisine souterraine avec les communautés locales." }, { day: "Jour 3: Héritage", title: "Machu Picchu", desc: "Train Hiram Bingham et dîner de gala face à la citadelle." }], includes: ["Train Hiram Bingham", "Hôtel Belmond", "Vols Internes", "Dîner de Gala"] },
-                            { id: 'lima', title: "Lima: Épicentre Gastronomique Mondial", loc: "Lima Métropolitaine", price: "2,950€", img: "https://images.unsplash.com/photo-1590426189563-7da9f7c05001?auto=format&fit=crop&w=800&q=80", itinerary: [{ day: "Jour 1: Origine", title: "Marchés Locaux", desc: "Marchés et Masterclass de Ceviche avec un chef étoilé." }, { day: "Jour 2: Avant-garde", title: "Haute Gastronomie", desc: "Déjeuner et dîner dans les restaurants classés N°1 mondiaux." }, { day: "Jour 3: Héritage", title: "Histoire du Pisco", desc: "Demeures coloniales et dégustations privées de Pisco." }], includes: ["Réservation VIP Central", "Transport SUV Luxe", "Vols Internationaux", "Dégustations"] }
-                        ] 
-                    },
-                    about: { title: 'Notre Histoire', p1: 'ÂMÉ est né du désir de partager la richesse culturelle du Pérou avec le monde. Nous sommes le pont entre la tradition millénaire et la sophistication européenne.', p2: 'Chaque événement et chaque voyage porte notre sceau d\'excellence et de respect pour les racines qui nous définissent.', stat1: 'PRODUITS BIOLOGIQUES', stat2: 'TRADITION VIVANTE' },
-                    success: { title: 'Merci Beaucoup !', message: 'Votre demande a été traitée avec succès sous le sceau ÂMÉ. Nous vous contacterons sous 24 heures.', btn: 'Fermer et Retour' },
-                    footer: { desc: 'ÂMÉ — Connecter les âmes du Pérou et de la France par la culture et la saveur.', services: 'Services', contact: 'Contact' },
-                    checkout: { title: 'Finaliser l\'Achat', personalData: 'Données Client', fullName: 'Nom Complet / Raison Sociale', email: 'E-mail', phone: 'Téléphone', paymentData: 'Paiement Sécurisé', cardNumber: 'Numéro de Carte', expiry: 'MM/AA', btnPay: 'CONFIRMER ET PAYER' }
-                }
-            };
+          <div class="flex justify-between items-start pt-1">
+            <div class="space-y-1 pr-4">
+              <h3 class="font-title font-bold text-sm tracking-wide text-focaccia-cocoa group-hover:text-focaccia-kraft transition-colors">
+                ${item.name}
+              </h3>
+              <p class="text-[11px] text-focaccia-cocoa/60 line-clamp-1">
+                ${item.desc}
+              </p>
+            </div>
+            <span class="font-title font-bold text-xs text-focaccia-kraft whitespace-nowrap">
+              S/ ${item.price.toFixed(2)}
+            </span>
+          </div>
+        </div>
+      `;
+    }
 
-            const venueTranslations = {
-                es: {
-                    paris: {
-                        small: [
-                            { id: 'p1', name: 'El Jardín Secreto', desc: 'Hotel particulier íntimo con un jardín francés de ensueño.', price: 850 },
-                            { id: 'p2', name: 'Galería Prestige Loft', desc: 'Espacio histórico con techos de cristal en el centro.', price: 1200 },
-                            { id: 'p3', name: 'El Atelier Montmartre', desc: 'Vistas bohemias y ambiente artístico exclusivo.', price: 950 }
-                        ],
-                        medium: [
-                            { id: 'p4', name: 'Salón de los Espejos', desc: 'Elegancia neoclásica frente a la majestuosa Ópera.', price: 2500 },
-                            { id: 'p5', name: 'Residencia Real', desc: 'Mansión histórica restaurada con salones de lujo.', price: 2900 },
-                            { id: 'p6', name: 'Pabellón Étoile', desc: 'Modernidad sofisticada cerca del Arco del Triunfo.', price: 2800 }
-                        ],
-                        large: [
-                            { id: 'p7', name: 'Castillo Alouettes', desc: 'Palacio histórico ideal para grandes galas de prestigio.', price: 5500 },
-                            { id: 'p8', name: 'Gran Salón Palacio', desc: 'Espacio arquitectónico icónico y versátil.', price: 7200 },
-                            { id: 'p9', name: 'Jardines Museo Rodin', desc: 'Gala señorial rodeada de arte y jardines reales.', price: 6800 }
-                        ]
-                    },
-                    lyon: {
-                        small: [
-                            { id: 'l1', name: 'Corte de los Loges', desc: 'Renacimiento puro en el corazón del Viejo Lyon.', price: 700 },
-                            { id: 'l2', name: 'Terraza Ródano', desc: 'Vistas panorámicas impresionantes al río.', price: 900 },
-                            { id: 'l3', name: 'Bóveda Célestins', desc: 'Cueva de piedra rústica con calidez inigualable.', price: 600 }
-                        ],
-                        medium: [
-                            { id: 'l4', name: 'Palacio de la Bolsa', desc: 'Majestuosidad histórica en el centro financiero.', price: 2100 },
-                            { id: 'l5', name: 'Hangar Confluence', desc: 'Diseño industrial vanguardista y muy espacioso.', price: 1800 },
-                            { id: 'l6', name: 'Castillo de la Verrière', desc: 'Entorno verde y sofisticación rural.', price: 2400 }
-                        ],
-                        large: [
-                            { id: 'l7', name: 'Eurexpo Hall de Élite', desc: 'Infraestructura de primer nivel para galas masivas.', price: 4500 },
-                            { id: 'l8', name: 'Dominio de las Lilas', desc: 'Finca privada exclusiva con carpa de cristal.', price: 3900 },
-                            { id: 'l9', name: 'Estadio Lyon VIP', desc: 'Máxima modernidad para grandes aforos.', price: 5200 }
-                        ]
-                    }
-                },
-                en: {
-                    paris: {
-                        small: [
-                            { id: 'p1', name: 'The Secret Garden', desc: 'Intimate private mansion with a dreamlike French garden.', price: 850 },
-                            { id: 'p2', name: 'Prestige Loft Gallery', desc: 'Historical space with glass ceilings in the city center.', price: 1200 },
-                            { id: 'p3', name: 'Montmartre Atelier', desc: 'Bohemian views and exclusive artistic atmosphere.', price: 950 }
-                        ],
-                        medium: [
-                            { id: 'p4', name: 'Mirror Ballroom', desc: 'Neoclassical elegance across from the Opera house.', price: 2500 },
-                            { id: 'p5', name: 'Royal Residence', desc: 'Restored historical mansion with luxury salons.', price: 2900 },
-                            { id: 'p6', name: 'Etoile Pavilion', desc: 'Sophisticated modernity near the Arc de Triomphe.', price: 2800 }
-                        ],
-                        large: [
-                            { id: 'p7', name: 'Alouettes Castle', desc: 'Historic palace ideal for major prestige galas.', price: 5500 },
-                            { id: 'p8', name: 'Grand Palais Hall', desc: 'Iconic architectural space for maximum prestige.', price: 7200 },
-                            { id: 'p9', name: 'Rodin Museum Garden', desc: 'Stately gala surrounded by art and royal gardens.', price: 6800 }
-                        ]
-                    },
-                    lyon: {
-                        small: [
-                            { id: 'l1', name: 'Loges Court', desc: 'Pure Renaissance in the heart of Old Lyon.', price: 700 },
-                            { id: 'l2', name: 'Rhone Terrace', desc: 'Stunning river views and high-end atmosphere.', price: 900 },
-                            { id: 'l3', name: 'Celestins Vault', desc: 'Rustic stone vault with unparalleled warmth.', price: 600 }
-                        ],
-                        medium: [
-                            { id: 'l4', name: 'Bourse Palace', desc: 'Historical majesty in the financial center.', price: 2100 },
-                            { id: 'l5', name: 'Confluence Hangar', desc: 'Avant-garde industrial design and very spacious.', price: 1800 },
-                            { id: 'l6', name: 'Glass Castle', desc: 'Green surroundings and rural sophistication.', price: 2400 }
-                        ],
-                        large: [
-                            { id: 'l7', name: 'Eurexpo Elite Hall', desc: 'Top-tier infrastructure for massive elite galas.', price: 4500 },
-                            { id: 'l8', name: 'Lilas Estate', desc: 'Exclusive private estate with a crystal tent.', price: 3900 },
-                            { id: 'l9', name: 'Lyon Stadium VIP', desc: 'The peak of modernity for large events.', price: 5200 }
-                        ]
-                    }
-                },
-                fr: {
-                    paris: {
-                        small: [
-                            { id: 'p1', name: 'Le Jardin Secret', desc: 'Hôtel particulier intime avec un jardin à la française.', price: 850 },
-                            { id: 'p2', name: 'Galerie Prestige Loft', desc: 'Espace historique avec verrières au centre de Paris.', price: 1200 },
-                            { id: 'p3', name: 'L’Atelier Montmartre', desc: 'Vues bohèmes et atmosphère artistique exclusive.', price: 950 }
-                        ],
-                        medium: [
-                            { id: 'p4', name: 'Le Salon des Miroirs', desc: 'Élégance néoclassique face à l\'Opéra de Paris.', price: 2500 },
-                            { id: 'p5', name: 'Résidence Royale', desc: 'Hôtel de luxe restauré avec salons de prestige.', price: 2900 },
-                            { id: 'p6', name: 'Le Pavillon Étoile', desc: 'Modernité sophistiquée près de l\'Arc de Triomphe.', price: 2800 }
-                        ],
-                        large: [
-                            { id: 'p7', name: 'Château des Alouettes', desc: 'Palais historique idéal pour les grandes galas.', price: 5500 },
-                            { id: 'p8', name: 'Le Grand Palais Hall', desc: 'Espace architectural iconique du prestige français.', price: 7200 },
-                            { id: 'p9', name: 'Jardin du Musée Rodin', desc: 'Gala majestueux entouré d\'art et de verdure.', price: 6800 }
-                        ]
-                    },
-                    lyon: {
-                        small: [
-                            { id: 'l1', name: 'La Cour des Loges', desc: 'Renaissance pure au cœur du Vieux Lyon.', price: 700 },
-                            { id: 'l2', name: 'Terrasse du Rhône', desc: 'Vues panoramiques sur le fleuve et ambiance chic.', price: 900 },
-                            { id: 'l3', name: 'Le Caveau des Célestins', desc: 'Voûte en pierre rustique à l\'accueil incomparable.', price: 600 }
-                        ],
-                        medium: [
-                            { id: 'l4', name: 'Palais de la Bourse', desc: 'Majesté historique au centre financier de Lyon.', price: 2100 },
-                            { id: 'l5', name: 'Le Hangar Confluence', desc: 'Design industriel d\'avant-garde et très spacieux.', price: 1800 },
-                            { id: 'l6', name: 'Château de la Verrière', desc: 'Cadre verdoyant et sophistication rurale.', price: 2400 }
-                        ],
-                        large: [
-                            { id: 'l7', name: 'Eurexpo Elite Hall', desc: 'Infrastructure de haut niveau pour galas massifs.', price: 4500 },
-                            { id: 'l8', name: 'Domaine des Lilas', desc: 'Domaine privé exclusif avec chapiteau en cristal.', price: 3900 },
-                            { id: 'l9', name: 'Stade de Lyon VIP', desc: 'Le sommet de la modernité pour grands volumes.', price: 5200 }
-                        ]
-                    }
-                }
-            };
+    function filterMenu(category) {
+      renderMenu(category);
+    }
 
-            const content = t[lang] || t.es;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-msg');
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
 
-            const currentVenues = useMemo(() => {
-                const category = quoteData.pax < 120 ? 'small' : quoteData.pax < 280 ? 'medium' : 'large';
-                const venueData = venueTranslations[lang] || venueTranslations.es;
-                return venueData[quoteData.city][category];
-            }, [quoteData.city, quoteData.pax, lang]);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3000);
+    }
 
-            const calculation = useMemo(() => {
-                let base = 45;
-                let foodExtra = 0;
-                const isSmallGroup = quoteData.pax < 100;
-                if (quoteData.foodType === 'sierra') foodExtra = isSmallGroup ? 15 : 10;
-                else if (quoteData.foodType === 'selva') foodExtra = isSmallGroup ? 18 : 12;
-                else if (quoteData.foodType === 'mix') foodExtra = isSmallGroup ? 25 : 18;
-                
-                let showPrice = showOptions[quoteData.showType].price || 0;
-                let showBonus = 0;
-                if (quoteData.showType !== 'none') {
-                    if (quoteData.showType === 'gala') { if (quoteData.pax >= 200) showBonus = -showPrice; }
-                    else { if (quoteData.pax >= 100) showBonus = -showPrice; }
-                }
+    // Menú móvil
+    let isMobileMenuOpen = false;
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('menu-icon');
+      isMobileMenuOpen = !isMobileMenuOpen;
+      
+      if (isMobileMenuOpen) {
+        menu.classList.remove('hidden');
+        icon.setAttribute('data-lucide', 'x');
+      } else {
+        menu.classList.add('hidden');
+        icon.setAttribute('data-lucide', 'menu');
+      }
+      try {
+        lucide.createIcons();
+      } catch(e) {}
+    }
 
-                let locFixed = quoteData.city === 'paris' ? 300 : 220;
-                let groupSurcharge = isSmallGroup ? 250 : 0;
-                let venueCost = 0;
-                if (!quoteData.hasVenue && quoteData.selectedVenueId) {
-                    const found = currentVenues.find(v => v.id === quoteData.selectedVenueId);
-                    venueCost = found ? found.price : 0;
-                }
-                
-                const total = ((base + foodExtra) * quoteData.pax) + locFixed + showPrice + showBonus + groupSurcharge + venueCost;
-                return { base: base + foodExtra, total, locFixed, showPrice, showBonus, groupSurcharge, venueCost };
-            }, [quoteData, currentVenues]);
+    // Modal de Productos
+    function openProductModal(id) {
+      const item = menuData.find(p => p.id === id);
+      if (!item) return;
 
-            useEffect(() => {
-                const handleScroll = () => setScrolled(window.scrollY > 50);
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
+      document.getElementById('modal-img').src = item.img;
+      document.getElementById('modal-img').alt = item.name;
+      document.getElementById('modal-badge').textContent = item.tag || "Artesanal";
+      document.getElementById('modal-category').textContent = item.category;
+      document.getElementById('modal-name').textContent = item.name;
+      document.getElementById('modal-price').textContent = `S/ ${item.price.toFixed(2)}`;
+      document.getElementById('modal-desc').textContent = item.desc;
 
-            const scrollTo = (id) => {
-                const element = document.getElementById(id);
-                if (element) window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
-            };
+      // Resetear configuraciones condicionales
+      document.getElementById('custom-focaccia-builder').classList.add('hidden');
+      document.getElementById('soda-selector-panel').classList.add('hidden');
+      document.getElementById('modal-ingredients-container').classList.remove('hidden');
 
-            const handleCloseSuccess = () => {
-                setIsSuccessOpen(false);
-                setSelectedItinerary(null);
-                setIsQuoteOpen(false);
-                setIsCheckoutOpen(false);
-                setIsEventCheckoutOpen(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            };
+      const addBtn = document.getElementById('modal-add-btn');
+      addBtn.textContent = "AÑADIR A LA BOLSA";
 
-            return (
-                <div className="font-sans antialiased text-black bg-[#FDF9F8]">
-                    {/* Barra de navegación con Blur Efecto Glassmorphism al bajar */}
-                    <nav className={`fixed w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-white/70 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-8'}`}>
-                        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-black">
-                            <div className="flex items-center space-x-2 cursor-pointer text-black" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
-                                <div className={`w-8 h-8 flex items-center justify-center border border-current ${scrolled ? 'text-[#5B0B23]' : 'text-white'}`}><span className="text-lg font-serif font-bold italic">Â</span></div>
-                                <span className={`text-xl font-serif tracking-[0.2em] uppercase ${scrolled ? 'text-[#5B0B23]' : 'text-white'}`}>ÂMÉ</span>
-                            </div>
-                            <div className="hidden md:flex space-x-8 items-center text-[10px] uppercase font-bold tracking-[0.1em] text-black">
-                                {['home', 'catering', 'travel', 'about'].map(k => (
-                                    <button key={k} onClick={() => k==='home'?window.scrollTo({top:0, behavior:'smooth'}):scrollTo(k==='travel'?'viajes':k==='about'?'nosotros':'catering')} className={`btn-transition hover:opacity-70 ${scrolled ? 'text-black' : 'text-white'}`}>{content.nav[k]}</button>
-                                ))}
-                                <div className="relative text-black">
-                                    <button onClick={() => setLangMenuOpen(!langMenuOpen)} className={`flex items-center space-x-2 px-3 py-1 border border-current rounded-full ${scrolled ? 'text-black' : 'text-white'}`}><Icon name="globe" size={12}/><span>{lang.toUpperCase()}</span><Icon name="chevron-down" size={10}/></button>
-                                    {langMenuOpen && (
-                                        <div className="absolute right-0 mt-3 w-32 bg-white shadow-2xl py-3 flex flex-col items-center border border-gray-100 z-50 text-black">
-                                            {['es', 'en', 'fr'].map((l) => (
-                                                <button key={l} onClick={() => { setLang(l); setLangMenuOpen(false); }} className="w-full py-2 hover:bg-gray-50 uppercase text-[10px] font-bold text-black transition-colors">{l === 'es' ? 'Español' : l === 'en' ? 'English' : 'Français'}</button>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                                <button onClick={() => scrollTo('catering')} className="text-white px-8 py-2.5 rounded-full shadow-lg bg-[#5B0B23] hover:bg-black btn-transition font-bold tracking-widest uppercase text-[10px]">{content.nav.book}</button>
-                            </div>
-                        </div>
-                    </nav>
+      // 1. CONFIGURADOR: CREA TU FOCACCIA (IDs 99 o 1)
+      if (id === 99 || id === 1) {
+        document.getElementById('custom-focaccia-builder').classList.remove('hidden');
+        document.getElementById('modal-ingredients-container').classList.add('hidden');
+        
+        // Resetear estado del builder
+        customBase = "Romero";
+        customProtein = "Vegetariana";
+        customProteinPrice = 0;
+        customCheese = "Stracciatella";
+        customToppings = [];
+        customSauce = "Pesto";
+        updateBuilderUI();
 
-                    <SuccessModal isOpen={isSuccessOpen} onClose={handleCloseSuccess} content={content} />
-                    <UniversalCheckout 
-                        isOpen={isCheckoutOpen} 
-                        onClose={() => setIsCheckoutOpen(false)} 
-                        onComplete={() => { setIsCheckoutOpen(false); setIsSuccessOpen(true); }} 
-                        title={content.checkout.title} 
-                        subtitle={selectedItinerary?.title} 
-                        amount={selectedItinerary?.price} 
-                        details={[`Destino: ${selectedItinerary?.loc}`]} 
-                        content={content} 
-                    />
-                    <UniversalCheckout 
-                        isOpen={isEventCheckoutOpen} 
-                        onClose={() => setIsEventCheckoutOpen(false)} 
-                        onComplete={() => { setIsEventCheckoutOpen(false); setIsSuccessOpen(true); }} 
-                        title={content.quote.title} 
-                        subtitle="Premium Event" 
-                        amount={`${calculation.total}€`} 
-                        details={[`${content.quote.pax}: ${quoteData.pax}`]} 
-                        content={content} 
-                    />
-
-                    {/* Modal Itinerario Viaje */}
-                    {selectedItinerary && (
-                        <div className="fixed inset-0 z-[140] flex items-center justify-center p-4 text-black text-left">
-                            <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={() => setSelectedItinerary(null)}></div>
-                            <div className="bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto relative z-10 shadow-2xl flex flex-col md:grid md:grid-cols-5 rounded-sm modal-fade-in text-black">
-                                <button onClick={() => setSelectedItinerary(null)} className="absolute top-6 right-6 text-white md:text-gray-400 z-50"><Icon name="x" size={28}/></button>
-                                <div className="md:col-span-2 h-72 md:h-full relative overflow-hidden text-left text-black">
-                                    <img src={selectedItinerary.img} className="w-full h-full object-cover" alt="Viaje" />
-                                    <div className="absolute inset-0 bg-black/30 flex items-end p-8 text-white text-left font-serif text-3xl"><h3>{selectedItinerary.title}</h3></div>
-                                </div>
-                                <div className="md:col-span-3 p-8 md:p-12 space-y-10 flex flex-col justify-between bg-white text-left text-black">
-                                    <div className="space-y-8 text-black text-left">
-                                        <h4 className="text-xs uppercase font-bold tracking-widest text-[#5B0B23] border-b pb-2 text-left">Ruta Detallada</h4>
-                                        <div className="space-y-6 text-black">
-                                            {selectedItinerary.itinerary.map((it, i) => (
-                                                <div key={i} className="flex gap-4 text-black">
-                                                    <div className="w-6 h-6 rounded-full bg-[#5B0B23] text-white flex items-center justify-center text-[10px] shrink-0 font-bold">{i+1}</div>
-                                                    <div className="text-left">
-                                                        <p className="text-[10px] font-bold text-gray-300 uppercase">{it.day}</p>
-                                                        <h5 className="font-serif text-[#5B0B23] text-lg">{it.title}</h5>
-                                                        <p className="text-sm text-gray-500 italic leading-relaxed">{it.desc}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className="bg-[#FDF9F8] p-6 border border-gray-100 rounded-sm text-left text-black">
-                                            <h5 className="text-[10px] uppercase font-bold text-gray-400 mb-4 tracking-widest text-left">Servicios VIP Incluidos:</h5>
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[9px] uppercase text-left text-black">
-                                                {selectedItinerary.includes.map((inc, i) => (
-                                                    <div key={i} className="flex items-center tracking-tighter text-left text-black"><Icon name="check-circle" size={10} className="text-green-500 mr-2 shrink-0"/> {inc}</div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button onClick={() => setIsCheckoutOpen(true)} className="w-full py-4 bg-[#5B0B23] text-white font-bold uppercase text-[10px] tracking-widest hover:bg-black btn-transition shadow-lg text-center mt-6">COMPRAR VIAJE — {selectedItinerary.price}</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Modal Cotización Catering */}
-                    {isQuoteOpen && (
-                        <div className="fixed inset-0 z-[110] flex items-center justify-center p-2 md:p-6 text-black text-left">
-                            <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setIsQuoteOpen(false)}></div>
-                            <div className="bg-white w-full max-w-7xl max-h-[95vh] overflow-y-auto relative z-10 shadow-2xl rounded-sm flex flex-col lg:flex-row modal-fade-in text-black">
-                                <button onClick={() => setIsQuoteOpen(false)} className="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors"><Icon name="x" size={24}/></button>
-                                
-                                <div className="flex-1 p-8 md:p-12 space-y-10 overflow-y-auto">
-                                    <h2 className="text-3xl font-serif text-[#5B0B23] leading-tight text-left">{content.quote.title}</h2>
-                                    <div className="grid md:grid-cols-2 gap-10">
-                                        <div className="space-y-6 text-black text-left">
-                                            <div>
-                                                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-widest block mb-2">{content.quote.city}</label>
-                                                <div className="flex gap-2 text-left">{['paris', 'lyon'].map(c => (
-                                                    <button key={c} onClick={() => setQuoteData({...quoteData, city: c, selectedVenueId: null})} className={`flex-1 py-3 border text-[10px] uppercase font-bold tracking-widest btn-transition ${quoteData.city === c ? 'bg-[#5B0B23] text-white' : 'border-gray-200 text-gray-400'}`}>{c}</button>
-                                                ))}</div>
-                                            </div>
-                                            <div>
-                                                <div className="flex justify-between items-center mb-2 text-left">
-                                                    <label className="text-[10px] uppercase font-bold text-gray-400 tracking-widest">{content.quote.pax}</label>
-                                                    <div className="flex items-center space-x-6 text-left">
-                                                        <button onClick={() => setQuoteData(prev => ({...prev, pax: Math.max(20, prev.pax - 1)}))} className="text-2xl font-bold text-[#5B0B23] hover:opacity-50 transition-all px-2"><Icon name="minus" size={18} /></button>
-                                                        <button onClick={() => setQuoteData(prev => ({...prev, pax: Math.min(500, prev.pax + 1)}))} className="text-2xl font-bold text-[#5B0B23] hover:opacity-50 transition-all px-2"><Icon name="plus" size={18} /></button>
-                                                    </div>
-                                                </div>
-                                                <input type="range" min="20" max="500" step="1" value={quoteData.pax} onChange={(e) => setQuoteData({...quoteData, pax: parseInt(e.target.value)})} className="custom-range" />
-                                                <div className="text-xl font-serif text-[#5B0B23] mt-2 font-bold tracking-tight text-left">{quoteData.pax} {content.quote.pax}</div>
-                                            </div>
-                                            <div>
-                                                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-widest block mb-2">{content.quote.food}</label>
-                                                <select className="w-full p-4 border border-gray-100 text-[10px] uppercase font-bold tracking-widest outline-none bg-white text-black" value={quoteData.foodType} onChange={(e) => setQuoteData({...quoteData, foodType: e.target.value})}>
-                                                    {Object.entries(content.quote.foodOptions).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label className="text-[10px] uppercase font-bold text-gray-400 tracking-widest block mb-2">{content.quote.venue}</label>
-                                                <div className="flex gap-2 mb-4 text-left text-black">
-                                                    <button onClick={() => setQuoteData({...quoteData, hasVenue: true, selectedVenueId: null})} className={`flex-1 py-3 border text-[10px] uppercase font-bold tracking-widest btn-transition ${quoteData.hasVenue ? 'bg-[#5B0B23] text-white' : 'border-gray-200 text-gray-400'}`}>{content.quote.venueOptions.true}</button>
-                                                    <button onClick={() => setQuoteData({...quoteData, hasVenue: false})} className={`flex-1 py-3 border text-[10px] uppercase font-bold tracking-widest btn-transition ${!quoteData.hasVenue ? 'bg-[#5B0B23] text-white' : 'border-gray-200 text-gray-400'}`}>{content.quote.venueOptions.false}</button>
-                                                </div>
-                                                {!quoteData.hasVenue && (
-                                                    <div className="space-y-3 animate-in slide-in-from-top-2 duration-300 text-left text-black">
-                                                        {currentVenues.map((v) => (
-                                                            <div key={v.id} onClick={() => setQuoteData({...quoteData, selectedVenueId: v.id})} className={`p-4 border rounded-sm cursor-pointer btn-transition flex flex-col group ${quoteData.selectedVenueId === v.id ? 'border-[#5B0B23] bg-[#FAF7F6] shadow-sm' : 'border-gray-100 bg-white hover:border-gray-200'}`}>
-                                                                <div className="flex justify-between items-center mb-1 text-left font-serif text-base">
-                                                                    <h4 className="group-hover:underline text-[#5B0B23]">{v.name}</h4>
-                                                                    <span className="text-[10px] font-bold text-gray-400">+{v.price}€</span>
-                                                                </div>
-                                                                <p className="text-[10px] text-gray-500 italic leading-snug">{v.desc}</p>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className="space-y-6 text-black text-left">
-                                            <div className="space-y-4">
-                                                <label className="text-[10px] uppercase font-bold text-[#5B0B23] tracking-widest block border-b pb-2 text-left">{content.quote.show}:</label>
-                                                <div className="grid grid-cols-1 gap-3">
-                                                    {Object.entries(showOptions).map(([k, v]) => {
-                                                        const isIncluded = (k === 'gala' && quoteData.pax >= 200) || (k !== 'none' && k !== 'gala' && quoteData.pax >= 100);
-                                                        return (
-                                                            <div key={k} onClick={() => setQuoteData({...quoteData, showType: k})} className={`p-4 border rounded-sm cursor-pointer btn-transition flex justify-between items-center ${quoteData.showType === k ? 'border-[#5B0B23] bg-[#FAF7F6] shadow-sm' : 'border-gray-100 bg-white hover:border-gray-200'}`}>
-                                                                <div className="flex flex-col text-left">
-                                                                    <span className="text-xs font-bold text-black">{content.quote.showTitles[k]}</span>
-                                                                    {v.region && <span className="text-[9px] uppercase tracking-widest text-[#5B0B23] opacity-60">{v.region}</span>}
-                                                                </div>
-                                                                <div className="text-right">
-                                                                    {isIncluded ? <span className="text-[8px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-sm border border-green-100">{content.quote.statusIncl}</span> : k !== 'none' && <span className="text-[10px] font-bold text-gray-400">+{v.price}€</span>}
-                                                                </div>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="w-full lg:w-96 p-10 bg-[#5B0B23] text-white flex flex-col justify-between shrink-0 text-center">
-                                    <div className="space-y-10">
-                                        <h3 className="text-2xl font-serif italic border-b border-white/20 pb-4">{content.quote.summary}</h3>
-                                        <div className="space-y-6 text-sm">
-                                            <div className="flex justify-between items-end border-b border-white/10 pb-4 opacity-80">
-                                                <span className="uppercase text-[10px] tracking-widest">{content.quote.subtotal}</span>
-                                                <span className="text-lg font-serif">{calculation.base}€/pax</span>
-                                            </div>
-                                            <div className="space-y-3 opacity-60 uppercase text-[9px] tracking-[0.1em]">
-                                                <div className="flex justify-between"><span>{content.quote.surchargeLabel} {quoteData.city}</span><span>+{calculation.locFixed}€</span></div>
-                                                {calculation.venueCost > 0 && <div className="flex justify-between"><span>{content.quote.venueLabel}</span><span>+{calculation.venueCost}€</span></div>}
-                                                {calculation.groupSurcharge > 0 && <div className="flex justify-between text-[#DBC7C3]"><span>{content.quote.groupLabel}</span><span>+{calculation.groupSurcharge}€</span></div>}
-                                                <div className="flex justify-between"><span>Show</span><span>+{calculation.showPrice}€</span></div>
-                                                {calculation.showBonus < 0 && <div className="flex justify-between text-green-400 font-bold border-t border-green-400/20 pt-2"><span>{content.quote.bonusLabel}</span><span>{calculation.showBonus}€</span></div>}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="mt-12 text-center space-y-8">
-                                        <div className="space-y-2 bg-white/5 py-10 rounded-sm">
-                                            <span className="text-[11px] uppercase tracking-[0.5em] opacity-50 font-light">{content.quote.total}</span>
-                                            <p className="text-5xl font-serif italic text-[#DBC7C3]">{calculation.total}€</p>
-                                        </div>
-                                        <button onClick={() => { setIsQuoteOpen(false); setIsEventCheckoutOpen(true); }} className="w-full py-5 font-bold uppercase text-[11px] tracking-[0.3em] shadow-2xl btn-transition border border-[#DBC7C3] bg-[#DBC7C3] text-[#5B0B23] hover:bg-white">{content.quote.btnBook}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Hero Section */}
-                    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-                        <div className="absolute inset-0 bg-black/60 z-10"></div>
-                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80" className="absolute inset-0 w-full h-full object-cover scale-105" alt="Hero" />
-                        <div className="relative z-20 text-center px-6 text-white space-y-8">
-                            <h2 className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-80">{content.hero.sub}</h2>
-                            <h1 className="text-4xl sm:text-6xl md:text-8xl font-serif leading-tight">{content.hero.title} <br/><span className="italic font-light text-[#DBC7C3] block mt-2">{content.hero.title2}</span></h1>
-                            <div className="flex flex-col sm:flex-row justify-center gap-5 pt-8">
-                                <button onClick={() => scrollTo('catering')} className="px-10 py-5 uppercase tracking-[0.2em] text-[10px] font-bold text-white shadow-2xl btn-transition bg-[#5B0B23] hover:bg-black">{content.hero.btn1}</button>
-                                <button onClick={() => scrollTo('viajes')} className="px-10 py-5 bg-white text-black uppercase tracking-[0.2em] text-[10px] font-bold shadow-2xl btn-transition hover:bg-gray-100">{content.hero.btn2}</button>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Catering Section */}
-                    <section id="catering" className="py-32 md:py-48 px-6 max-w-7xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-20 items-center text-left bg-white text-black">
-                        <div className="relative overflow-hidden group rounded-sm shadow-2xl">
-                            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Catering" />
-                            <div className="absolute -bottom-4 -right-4 bg-white p-6 shadow-xl z-20 font-serif italic font-bold text-black">Staff ÂMÉ</div>
-                        </div>
-                        <div className="space-y-8 order-1 lg:order-2">
-                            <span className="uppercase tracking-[0.3em] text-[10px] font-bold border-l-4 pl-4 border-[#5B0B23] text-[#5B0B23]">{content.cat.tag}</span>
-                            <h2 className="text-5xl font-serif text-[#5B0B23] leading-tight">{content.cat.title}</h2>
-                            <p className="text-gray-500 italic text-lg leading-relaxed">{content.cat.desc}</p>
-                            
-                            <div className="grid sm:grid-cols-2 gap-4">
-                                <div className="bg-[#FDF9F8] p-6 shadow-sm border border-gray-100 rounded-sm">
-                                    <h4 className="font-serif text-xl mb-2 text-[#5B0B23]">{content.cat.detail1}</h4>
-                                    <p className="text-xs text-gray-400 leading-relaxed">{content.cat.detail1Desc}</p>
-                                </div>
-                                <div className="bg-[#FDF9F8] p-6 shadow-sm border border-gray-100 rounded-sm">
-                                    <h4 className="font-serif text-xl mb-2 text-[#5B0B23]">{content.cat.detail2}</h4>
-                                    <p className="text-xs text-gray-400 leading-relaxed">{content.cat.detail2Desc}</p>
-                                </div>
-                            </div>
-
-                            <button onClick={() => setIsQuoteOpen(true)} className="px-12 py-5 bg-[#5B0B23] text-white font-bold uppercase text-[10px] hover:bg-black btn-transition shadow-xl tracking-widest">{content.cat.btn}</button>
-                        </div>
-                    </section>
-
-                    {/* Viajes Section */}
-                    <section id="viajes" className="py-24 md:py-32 bg-[#F9F4F3] px-6 text-black">
-                        <div className="max-w-7xl mx-auto text-center mb-16 space-y-4">
-                            <span className="uppercase tracking-[0.3em] text-[10px] font-bold text-[#5B0B23]">{content.trips.tag}</span>
-                            <h2 className="text-4xl md:text-5xl font-serif text-[#5B0B23] leading-tight font-bold">{content.trips.title}</h2>
-                            <p className="text-gray-500 max-w-2xl mx-auto text-sm leading-relaxed">{content.trips.desc}</p>
-                        </div>
-                        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
-                            {content.trips.packs.map(p => (
-                                <div key={p.id} className="bg-white shadow-sm hover:shadow-2xl transition-all duration-500 group overflow-hidden text-left">
-                                    <div className="h-72 overflow-hidden relative">
-                                        <img src={p.img} className="w-full h-full object-cover group-hover:scale-110 duration-700" alt={p.title} />
-                                    </div>
-                                    <div className="p-8 space-y-4">
-                                        <h3 className="text-xl font-serif text-[#5B0B23] h-12 leading-snug">{p.title}</h3>
-                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center"><Icon name="map-pin" size={12} className="mr-2 text-[#5B0B23]" />{p.loc}</p>
-                                        <button onClick={() => setSelectedItinerary(p)} className="text-[10px] font-bold text-[#5B0B23] uppercase tracking-widest border-b border-[#5B0B23] pb-1 hover:border-black hover:text-black btn-transition">{lang === 'es' ? 'Ver Itinerario' : lang === 'fr' ? 'Voir Itinéraire' : 'View Itinerary'}</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* Historia / Nosotros Section */}
-                    <section id="nosotros" className="py-32 px-6 max-w-7xl mx-auto flex flex-col lg:grid lg:grid-cols-2 gap-20 items-center text-left bg-white text-black">
-                        <div className="space-y-8">
-                            <h2 className="text-5xl font-serif text-[#5B0B23] border-b border-[#5B0B23]/10 pb-4">{content.about.title}</h2>
-                            <div className="space-y-6 text-gray-600 font-serif italic text-lg leading-relaxed">
-                                <p className="first-letter:text-5xl first-letter:text-[#5B0B23] first-letter:float-left first-letter:mr-3">{content.about.p1}</p>
-                                <p>{content.about.p2}</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4 text-center">
-                                <div className="bg-[#FAF7F6] p-8 shadow-sm rounded-sm border border-[#5B0B23]/5">
-                                    <p className="text-4xl font-serif text-[#5B0B23] font-light">98%</p>
-                                    <p className="text-[9px] uppercase font-bold text-gray-500 tracking-[0.2em] mt-2">{content.about.stat1}</p>
-                                </div>
-                                <div className="bg-[#FAF7F6] p-8 shadow-sm rounded-sm border border-[#5B0B23]/5">
-                                    <p className="text-4xl font-serif text-[#5B0B23] font-light">100%</p>
-                                    <p className="text-[9px] uppercase font-bold text-gray-500 tracking-[0.2em] mt-2">{content.about.stat2}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="relative overflow-hidden rounded-sm shadow-2xl">
-                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" className="w-full h-[500px] object-cover object-top scale-110" alt="Nosotros" />
-                        </div>
-                    </section>
-
-                    {/* Footer */}
-                    <footer className="bg-[#5B0B23] text-white py-24 px-6 text-left">
-                        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-16">
-                            <div className="space-y-6">
-                                <div className="flex items-center space-x-2">
-                                    <div className="w-8 h-8 flex items-center justify-center border border-white font-serif font-bold italic">Â</div>
-                                    <span className="text-xl tracking-widest font-serif">ÂMÉ</span>
-                                </div>
-                                <p className="text-sm opacity-60 leading-relaxed max-w-xs">{content.footer.desc}</p>
-                                <div className="flex space-x-6 pt-4">
-                                    <a href="#" className="hover:text-[#DBC7C3] transition-colors"><Icon name="instagram" size={20}/></a>
-                                    <a href="#" className="hover:text-[#DBC7C3] transition-colors"><Icon name="facebook" size={20}/></a>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 className="font-serif text-lg border-b border-white/10 pb-4 mb-6 uppercase text-[10px] font-bold tracking-widest">{content.footer.services}</h4>
-                                <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-[#DBC7C3]">
-                                    <li className="cursor-pointer hover:text-white" onClick={() => scrollTo('catering')}>{lang === 'es' ? 'Catering en Francia' : lang === 'fr' ? 'Traiteur en France' : 'France Catering'}</li>
-                                    <li className="cursor-pointer hover:text-white" onClick={() => scrollTo('viajes')}>{lang === 'es' ? 'TURISMO PERÚ' : lang === 'fr' ? 'TOURISME PÉROU' : 'PERU TOURISM'}</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 className="font-serif text-lg border-b border-white/10 pb-4 mb-6 uppercase text-[10px] font-bold tracking-widest">{content.footer.contact}</h4>
-                                <ul className="space-y-4 text-sm opacity-80">
-                                    <li className="flex items-center"><Icon name="mail" size={16} className="mr-3" />contact@ame-culture.com</li>
-                                    <li className="flex items-center"><Icon name="phone" size={16} className="mr-3" />+33 (0)1 23 45 67 89</li>
-                                    <li className="text-[10px] italic opacity-40 uppercase pt-4 tracking-widest">Paris — Lyon — Lima</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="max-w-7xl mx-auto border-t border-white/5 mt-16 pt-8 text-[10px] uppercase tracking-[0.2em] text-center opacity-40 italic">
-                            © {new Date().getFullYear()} ÂMÉ — Gastronomie & Culture de Prestige
-                        </div>
-                    </footer>
-                </div>
-            );
+        addBtn.onclick = () => {
+          addCustomFocacciaToCart();
+          closeProductModal();
         };
+      } 
+      // 2. SECTOR GASEOSA (ID 21)
+      else if (id === 21) {
+        document.getElementById('soda-selector-panel').classList.remove('hidden');
+        selectedSodaOptionVal = "Inka Kola";
+        updateSodaUI();
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+        addBtn.onclick = () => {
+          addSodaToCart();
+          closeProductModal();
+        };
+      } 
+      // 3. PRODUCTO REGULAR
+      else {
+        const ingDiv = document.getElementById('modal-ingredients');
+        ingDiv.innerHTML = item.ingredients.map(ing => `
+          <span class="text-[9px] font-semibold tracking-wider bg-focaccia-kraft/10 border border-focaccia-kraft/25 text-focaccia-cocoa px-2 py-1 rounded-md uppercase">
+            ${ing}
+          </span>
+        `).join('');
+
+        addBtn.onclick = () => {
+          addToCart(item.id);
+          closeProductModal();
+        };
+      }
+
+      document.getElementById('product-modal').classList.remove('custom-hidden');
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.add('custom-hidden');
+    }
+
+    // Controladores de "Crea tu Focaccia"
+    function setCustomBase(base) {
+      customBase = base;
+      updateBuilderUI();
+    }
+
+    function setCustomProtein(prot, extraPrice) {
+      customProtein = prot;
+      customProteinPrice = extraPrice;
+      updateBuilderUI();
+    }
+
+    function setCustomCheese(cheese) {
+      customCheese = cheese;
+      updateBuilderUI();
+    }
+
+    function toggleCustomTopping(topping) {
+      const idx = customToppings.indexOf(topping);
+      if (idx > -1) {
+        customToppings.splice(idx, 1);
+      } else {
+        if (customToppings.length >= 3) {
+          showToast("Solo puedes elegir hasta 3 toppings en tu Focaccia.");
+          return;
+        }
+        customToppings.push(topping);
+      }
+      updateBuilderUI();
+    }
+
+    function setCustomSauce(customs) {
+      customSauce = customs;
+      updateBuilderUI();
+    }
+
+    function updateBuilderUI() {
+      // Precio dinámico
+      customPrice = 28.00 + customProteinPrice;
+      document.getElementById('modal-price').textContent = `S/ ${customPrice.toFixed(2)}`;
+
+      // Botones Base
+      document.getElementById('base-romero').className = `p-2 border rounded-lg text-xs font-semibold text-center ${customBase === 'Romero' ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+      document.getElementById('base-rustica').className = `p-2 border rounded-lg text-xs font-semibold text-center ${customBase === 'Rústica' ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+
+      // Botones Proteína
+      const protMap = {
+        'Vegetariana': 'prot-veg', 'Prosciutto': 'prot-pro', 'Salame': 'prot-sal',
+        'Roast Beef': 'prot-roa', 'Jamón del País': 'prot-pais', 'Jamón de Pierna': 'prot-pier'
+      };
+      Object.keys(protMap).forEach(key => {
+        const btn = document.getElementById(protMap[key]);
+        btn.className = `p-2 border rounded-lg text-xs font-semibold text-left ${customProtein === key ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+      });
+
+      // Botones Queso
+      const cheeseMap = {
+        'Stracciatella': 'q-stra', 'Provolone': 'q-prov', 'Mozzarella': 'q-mozz', 'Gouda': 'q-gou'
+      };
+      Object.keys(cheeseMap).forEach(key => {
+        const btn = document.getElementById(cheeseMap[key]);
+        btn.className = `p-2 border rounded-lg text-xs font-semibold text-center ${customCheese === key ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+      });
+
+      // Botones Toppings
+      const topMap = {
+        'Tomates Confitados': 'top-tom', 'Albahaca': 'top-alba', 'Arúgula': 'top-aru',
+        'Higos': 'top-hig', 'Cebolla Caramelizada': 'top-ceb', 'Palta': 'top-pal'
+      };
+      Object.keys(topMap).forEach(key => {
+        const btn = document.getElementById(topMap[key]);
+        const isActive = customToppings.includes(key);
+        btn.className = `p-2 border rounded-lg text-xs font-semibold text-left ${isActive ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+      });
+
+      // Botones Salsas
+      const sauceMap = {
+        'Pesto': 's-pesto', 'Alioli': 's-alioli', 'Mostaza Especial': 's-mosta', 'Reducción Balsámico': 's-balsa'
+      };
+      Object.keys(sauceMap).forEach(key => {
+        const btn = document.getElementById(sauceMap[key]);
+        btn.className = `p-2 border rounded-lg text-xs font-semibold text-center ${customSauce === key ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+      });
+    }
+
+    function addCustomFocacciaToCart() {
+      const customId = `custom_${Date.now()}`;
+      const item = {
+        id: customId,
+        isCustom: true,
+        name: `Crea tu Focaccia (${customProtein})`,
+        price: customPrice,
+        img: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600&auto=format&fit=crop",
+        detailsText: `Base ${customBase} / Prot: ${customProtein} / Queso: ${customCheese} / Toppings: ${customToppings.join(', ') || 'Ninguno'} / Salsa: ${customSauce}`,
+        quantity: 1
+      };
+      cart.push(item);
+      showToast("¡Focaccia personalizada agregada a tu bolsa!");
+      updateCartCount();
+      updateCartUI();
+    }
+
+    // Controladores de Selección de Gaseosa
+    function selectSodaOption(soda) {
+      selectedSodaOptionVal = soda;
+      updateSodaUI();
+    }
+
+    function updateSodaUI() {
+      const sodaMap = {
+        'Inka Kola': 'soda-inka', 'Coca-Cola': 'soda-coca',
+        'Inka Kola Zero': 'soda-inkaz', 'Coca-Cola Zero': 'soda-cocaz'
+      };
+      Object.keys(sodaMap).forEach(key => {
+        const btn = document.getElementById(sodaMap[key]);
+        btn.className = `p-2.5 border rounded-lg text-xs font-semibold text-center ${selectedSodaOptionVal === key ? 'bg-focaccia-cocoa text-focaccia-cream border-focaccia-cocoa' : 'border-focaccia-kraft hover:bg-focaccia-kraft/10'}`;
+      });
+    }
+
+    function addSodaToCart() {
+      const uniqueSodaId = `soda_${selectedSodaOptionVal.replace(/\s+/g, '').toLowerCase()}`;
+      const existing = cart.find(c => c.id === uniqueSodaId);
+      
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          id: uniqueSodaId,
+          name: `Gaseosa ${selectedSodaOptionVal}`,
+          price: 6.00,
+          img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=600&auto=format&fit=crop",
+          quantity: 1
+        });
+      }
+      showToast(`¡Gaseosa ${selectedSodaOptionVal} agregada!`);
+      updateCartCount();
+      updateCartUI();
+    }
+
+    function handleQuickAdd(id) {
+      if (id === 99 || id === 1) {
+        openProductModal(id);
+      } else {
+        addToCart(id);
+      }
+    }
+
+    // Modals para elementos de Instagram / Momentos
+    function openInstaModal(postId) {
+      const details = instaFeedDetails[postId];
+      if (!details) return;
+
+      const imageElement = document.querySelector(`[onclick="openInstaModal(${postId})"] img`);
+      document.getElementById('modal-img').src = imageElement ? imageElement.src : `lima${postId}.jpeg`;
+      document.getElementById('modal-img').alt = details.title;
+      document.getElementById('modal-badge').textContent = "Momentos";
+      document.getElementById('modal-category').textContent = "Comunidad Lima";
+      document.getElementById('modal-name').textContent = details.title;
+      document.getElementById('modal-price').textContent = details.likes;
+      document.getElementById('modal-desc').innerHTML = `${details.text}<br><br><span class="text-focaccia-kraft/70 italic text-[10px]">${details.comments}</span>`;
+      
+      document.getElementById('custom-focaccia-builder').classList.add('hidden');
+      document.getElementById('soda-selector-panel').classList.add('hidden');
+      document.getElementById('modal-ingredients-container').classList.remove('hidden');
+
+      document.getElementById('modal-ingredients').innerHTML = `
+        <span class="text-[9px] font-semibold tracking-wider bg-focaccia-kraft/10 text-focaccia-cocoa px-2 py-1 rounded-md uppercase">#MomentosLima</span>
+        <span class="text-[9px] font-semibold tracking-wider bg-focaccia-kraft/10 text-focaccia-cocoa px-2 py-1 rounded-md uppercase">#FocacciaArtesanal</span>
+        <span class="text-[9px] font-semibold tracking-wider bg-focaccia-kraft/10 text-focaccia-cocoa px-2 py-1 rounded-md uppercase">#Miraflores</span>
+      `;
+
+      const addBtn = document.getElementById('modal-add-btn');
+      addBtn.textContent = "SEGUIR EN INSTAGRAM";
+      addBtn.onclick = () => {
+        window.open('https://www.instagram.com/lima.focacceria/?hl=es', '_blank');
+        closeProductModal();
+      };
+
+      document.getElementById('product-modal').classList.remove('custom-hidden');
+    }
+
+    // Carrito
+    function toggleCart() {
+      const sidebar = document.getElementById('cart-sidebar');
+      sidebar.classList.toggle('custom-hidden');
+      if (!sidebar.classList.contains('custom-hidden')) {
+        updateCartUI();
+      }
+    }
+
+    function addToCart(id) {
+      const item = menuData.find(p => p.id === id);
+      if (!item) return;
+
+      const existingInCart = cart.find(cartItem => cartItem.id === id);
+      if (existingInCart) {
+        existingInCart.quantity += 1;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+
+      showToast(`¡${item.name} añadida a tu bolsa!`);
+      updateCartCount();
+      updateCartUI();
+    }
+
+    function changeQuantity(id, change) {
+      const item = cart.find(cartItem => cartItem.id === id);
+      if (!item) return;
+
+      item.quantity += change;
+      if (item.quantity <= 0) {
+        cart = cart.filter(cartItem => cartItem.id !== id);
+      }
+      updateCartCount();
+      updateCartUI();
+    }
+
+    function updateCartCount() {
+      const countEl = document.getElementById('cart-count');
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+      
+      if (totalItems > 0) {
+        countEl.textContent = totalItems;
+        countEl.classList.remove('hidden');
+      } else {
+        countEl.classList.add('hidden');
+      }
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cart-items');
+      const subtotalEl = document.getElementById('cart-subtotal');
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-20 text-focaccia-cocoa/50 space-y-4">
+            <i data-lucide="shopping-basket" class="w-12 h-12 mx-auto stroke-[1.2]"></i>
+            <p class="font-title font-semibold tracking-wider text-xs">Tu bolsa está vacía</p>
+            <button onclick="toggleCart(); smoothScrollToSelector('#carta')" class="text-xs text-focaccia-kraft underline hover:text-focaccia-cocoa">Ver la carta hoy</button>
+          </div>
+        `;
+        subtotalEl.textContent = "S/ 0.00";
+        try {
+          lucide.createIcons();
+        } catch(e) {}
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        return `
+          <div class="flex items-start space-x-4 pb-6 border-b border-focaccia-kraft/10">
+            <div class="w-16 h-16 rounded-xl overflow-hidden bg-focaccia-kraft/10 flex-shrink-0">
+              <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover">
+            </div>
+
+            <div class="flex-1 space-y-1">
+              <div class="flex justify-between items-start">
+                <h4 class="font-title font-bold text-xs tracking-wide text-focaccia-cocoa max-w-[180px]">${item.name}</h4>
+                <span class="font-title font-bold text-xs text-focaccia-kraft">S/ ${itemTotal.toFixed(2)}</span>
+              </div>
+              <p class="text-[10px] text-focaccia-cocoa/60 italic">${item.detailsText ? item.detailsText : `S/ ${item.price.toFixed(2)} c/u`}</p>
+              
+              <div class="flex items-center space-x-2 pt-2">
+                <button onclick="changeQuantity('${item.id}', -1)" class="w-6 h-6 rounded-full border border-focaccia-kraft/35 flex items-center justify-center text-xs hover:bg-focaccia-cocoa hover:text-focaccia-cream transition-colors">-</button>
+                <span class="text-xs font-semibold w-6 text-center">${item.quantity}</span>
+                <button onclick="changeQuantity('${item.id}', 1)" class="w-6 h-6 rounded-full border border-focaccia-kraft/35 flex items-center justify-center text-xs hover:bg-focaccia-cocoa hover:text-focaccia-cream transition-colors">+</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      subtotalEl.textContent = `S/ ${subtotal.toFixed(2)}`;
+      try {
+        lucide.createIcons();
+      } catch(e) {}
+    }
+
+    // Pedido a WhatsApp
+    function sendOrderWhatsApp() {
+      if (cart.length === 0) {
+        showToast("Primero añade alguna focaccia artesanal a tu bolsa.");
+        return;
+      }
+
+      let itemsText = cart.map(item => {
+        let details = item.detailsText ? ` (%0A  _${item.detailsText}_)` : '';
+        return `- ${item.quantity}x ${item.name} (S/ ${(item.price * item.quantity).toFixed(2)})${details}`;
+      }).join('%0A');
+      
+      let subtotal = cart.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+      
+      let message = `¡Hola Lima Focacceria! Me gustaría realizar un pedido para Miraflores:%0A%0A`;
+      message += `*DETALLE DEL PEDIDO:*%0A${itemsText}%0A%0A`;
+      message += `*TOTAL ESTIMADO:* S/ ${subtotal.toFixed(2)}%0A%0A`;
+      message += `_Por favor, confírmenme disponibilidad para pasar a recoger o coordinar el delivery a mi dirección. ¡Muchas gracias!_`;
+
+      const whatsappURL = `https://api.whatsapp.com/send?phone=51937743015&text=${message}`;
+      window.open(whatsappURL, '_blank');
+    }
+
+    function subscribeNewsletter(event) {
+      event.preventDefault();
+      const input = event.target.querySelector('input');
+      showToast("¡Inscrito con éxito! Pronto recibirás novedades.");
+      input.value = '';
+    }
+  </script>
 </body>
 </html>
