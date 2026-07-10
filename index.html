@@ -113,9 +113,9 @@
   <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300 pointer-events-auto">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between pointer-events-auto">
       
-      <!-- Logotipo oficial transparente limafoca-removebg-preview.png -->
-      <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-16 pointer-events-auto">
-        <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-16 md:h-20 w-auto object-contain scale-150 origin-left md:scale-[1.8]" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+      <!-- Logotipo oficial transparente limafoca-removebg-preview.png escalado y reajustado -->
+      <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 overflow-visible pointer-events-auto">
+        <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-28 md:h-36 w-auto object-contain -my-4 md:-my-8 origin-left" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
         <div class="hidden flex items-center gap-3">
           <div class="relative h-11 w-11 flex items-center justify-center bg-focaccia-cocoa rounded-xl text-focaccia-cream font-title font-black text-xl tracking-tighter">
             L
@@ -169,8 +169,8 @@
     </div>
   </header>
 
-  <!-- ================= SECCIÓN HERO PRINCIPAL (PANTALLA COMPLETA) ================= -->
-  <section class="relative min-h-screen py-16 md:py-24 flex items-center bg-cover bg-center overflow-hidden" 
+  <!-- ================= SECCIÓN HERO PRINCIPAL (PANTALLA EXACTA VIEWPORT) ================= -->
+  <section class="relative h-[calc(100vh-5rem)] flex items-center bg-cover bg-center overflow-hidden" 
            style="background-image: url('https://images.unsplash.com/photo-1571244856341-4f3dd95db33e?q=80&w=1920&auto=format&fit=crop');">
     
     <!-- Capa de oscurecimiento de fondo (Cacao-Warm Overlay) para máxima legibilidad -->
@@ -381,8 +381,7 @@
     <div class="max-w-7xl mx-auto px-6 mb-10">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div class="space-y-4">
-          <div class="flex items-center space-x-2 text-focaccia-kraft">
-            <i data-lucide="heart" class="w-5 h-5 text-focaccia-kraft fill-focaccia-kraft/20 animate-pulse"></i>
+          <div class="text-focaccia-kraft">
             <span class="text-xs tracking-[0.2em] font-title font-bold uppercase">@LIMAFOCACCERIA</span>
           </div>
           <h2 class="text-3xl md:text-4xl font-title font-black tracking-wide">MOMENTOS LIMA</h2>
@@ -451,7 +450,7 @@
     </div>
   </section>
 
-  <!-- ================= RECOMENDACIONES DE LOS COMENSALES ================= -->
+  <!-- ================= RECOMENDACIONES DE LOS COMENSALES (NUESTRA COMUNIDAD) ================= -->
   <section class="py-20 md:py-32 bg-[#FAF9F6] border-t border-focaccia-kraft/20">
     <div class="max-w-7xl mx-auto px-6">
       
@@ -588,7 +587,7 @@
           </div>
         </div>
 
-        <!-- Columna del Mapa Agrandado y Sin Bordes -->
+        <!-- Columna del Mapa Agrandado y Sin Bordes (lg:col-span-5 expandida a lg:col-span-5 para un ajuste más a la izquierda y de mayor tamaño) -->
         <div class="lg:col-span-5 flex justify-center w-full">
           <div class="w-full h-[350px] md:h-[400px] rounded-3xl overflow-hidden shadow-xl border border-focaccia-kraft/10">
             <iframe class="w-full h-full border-0" 
@@ -982,7 +981,7 @@
         price: 36.00,
         tag: "Súper Cremosa",
         img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=600&auto=format&fit=crop",
-        desc: "Una burrata entera sumamente cremosa e hilada artesanalmente, pesto casero de albahaca fresca y piñones, arúgula baby crocante y una reducción de aceto balsámico de Módena.",
+        desc: "Una burrata entera sumamente cremosa e hilada artesanalmente, pesto casero de albahaca fresca and piñones, arúgula baby crocante y una reducción de aceto balsámico de Módena.",
         ingredients: ["Burrata entera", "Pesto artesanal", "Arúgula baby", "Reducción balsámica"]
       },
       {
@@ -1507,6 +1506,7 @@
       renderMenu(category);
     }
 
+    // Mostrar notificaciones Toast
     function showToast(message) {
       const toast = document.getElementById('toast');
       const msg = document.getElementById('toast-msg');
@@ -1930,3 +1930,5 @@
   </script>
 </body>
 </html>
+```
+eof
