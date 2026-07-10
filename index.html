@@ -8,7 +8,7 @@
   <!-- Tipografías de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600&family=Montserrat:wght=600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS y Lucide Icons (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -71,7 +71,7 @@
 
     /* Animación de marquesina infinita para las fotos de Instagram */
     @keyframes marquee {
-      0% {
+      0 {
         transform: translateX(0);
       }
       100% {
@@ -945,7 +945,7 @@
         price: 27.00,
         tag: "Vegetariana",
         img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=600&auto=format&fit=crop",
-        desc: "Una mezcla quesera espectacular de queso Gouda and queso Mozzarella derretidos al horno, coronada con cebolla caramelizada artesanalmente a fuego lento y alioli rústico.",
+        desc: "Una mezcla quesera espectacular de queso Gouda y queso Mozzarella derretidos al horno, coronada con cebolla caramelizada artesanalmente a fuego lento y alioli rústico.",
         ingredients: ["Queso Gouda", "Queso Mozzarella", "Cebolla caramelizada", "Alioli"]
       },
       {
@@ -1295,7 +1295,7 @@
       }
     ];
 
-    // Detalle de Posts de Instagram para el Modal Dinámico de Momentos Lima
+    // Detalle de Posts de Instagram para el Modal Dinámico
     const instaFeedDetails = {
       1: {
         title: "Pasión por el Detalle",
@@ -1500,7 +1500,6 @@
       renderMenu(category);
     }
 
-    // Mostrar notificaciones Toast
     function showToast(message) {
       const toast = document.getElementById('toast');
       const msg = document.getElementById('toast-msg');
@@ -1753,7 +1752,7 @@
       }
     }
 
-    // Modals para de Instagram / Momentos Lima
+    // Modals para elementos de Instagram / Momentos
     function openInstaModal(postId) {
       const details = instaFeedDetails[postId];
       if (!details) return;
@@ -1787,7 +1786,7 @@
       document.getElementById('product-modal').classList.remove('custom-hidden');
     }
 
-    // Carrito de Compras
+    // Carrito
     function toggleCart() {
       const sidebar = document.getElementById('cart-sidebar');
       sidebar.classList.toggle('custom-hidden');
