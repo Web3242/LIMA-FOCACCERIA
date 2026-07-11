@@ -71,7 +71,7 @@
 
     /* Animación de marquesina infinita para las fotos de Instagram */
     @keyframes marquee {
-      0 {
+      0% {
         transform: translateX(0);
       }
       100% {
@@ -113,10 +113,10 @@
   <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300 pointer-events-auto">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between pointer-events-auto">
       
-      <div class="flex items-center">
-        <!-- Logotipo oficial transparente limafoca-removebg-preview.png escalado y reajustado -->
-        <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 overflow-visible pointer-events-auto pr-6 mr-6">
-          <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-28 md:h-36 w-auto object-contain -my-4 md:-my-8 origin-left" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+      <div class="flex items-center h-20 overflow-visible">
+        <!-- Logotipo oficial transparente limafoca-removebg-preview.png alargado y expandido horizontalmente -->
+        <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 overflow-visible pointer-events-auto pr-4">
+          <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-24 md:h-32 w-auto object-contain -my-2 md:-my-6 origin-left" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
           <div class="hidden flex items-center gap-3">
             <div class="relative h-11 w-11 flex items-center justify-center bg-focaccia-cocoa rounded-xl text-focaccia-cream font-title font-black text-xl tracking-tighter">
               L
@@ -128,8 +128,8 @@
           </div>
         </a>
 
-        <!-- Línea divisoria flotante centrada en el medio del menú de navegación (no toca arriba ni abajo) -->
-        <div class="hidden md:block h-8 w-[1px] bg-focaccia-kraft/25 mr-6"></div>
+        <!-- Línea divisoria flotante centrada en el medio de la barra superior sin tocar arriba ni abajo -->
+        <div class="hidden md:block h-8 w-[1px] bg-focaccia-kraft/25 ml-4 mr-6"></div>
       </div>
 
       <!-- Menú Desktop con enlaces de navegación interactivos para desplazamiento fluido -->
@@ -143,7 +143,7 @@
 
       <!-- Botones de Acción Derecho -->
       <div class="flex items-center space-x-4">
-        <!-- Botón del Carrito con icono SVG limpio de respaldo -->
+        <!-- Botón del Carrito con icono SVG limpio y compatible de visualización garantizada -->
         <button onclick="toggleCart()" class="relative p-2.5 text-focaccia-cocoa hover:text-focaccia-kraft transition-colors" aria-label="Ver Carrito">
           <svg class="w-6 h-6 stroke-current" viewBox="0 0 24 24" fill="none" stroke="#4A3525" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display: block; min-width: 24px; min-height: 24px;">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -386,7 +386,7 @@
     <div class="max-w-7xl mx-auto px-6 mb-10">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div class="space-y-4">
-          <div class="flex items-center space-x-2 text-focaccia-kraft">
+          <div class="text-focaccia-kraft">
             <span class="text-xs tracking-[0.2em] font-title font-bold uppercase">@LIMAFOCACCERIA</span>
           </div>
           <h2 class="text-3xl md:text-4xl font-title font-black tracking-wide">MOMENTOS LIMA</h2>
@@ -455,7 +455,7 @@
     </div>
   </section>
 
-  <!-- ================= RECOMENDACIONES DE LOS COMENSALES ================= -->
+  <!-- ================= RECOMENDACIONES DE LOS COMENSALES (NUESTRA COMUNIDAD) ================= -->
   <section class="py-20 md:py-32 bg-[#FAF9F6] border-t border-focaccia-kraft/20">
     <div class="max-w-7xl mx-auto px-6">
       
@@ -1500,6 +1500,7 @@
       renderMenu(category);
     }
 
+    // Mostrar notificaciones Toast
     function showToast(message) {
       const toast = document.getElementById('toast');
       const msg = document.getElementById('toast-msg');
@@ -1923,4 +1924,3 @@
   </script>
 </body>
 </html>
-
