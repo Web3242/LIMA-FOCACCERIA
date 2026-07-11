@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lima Focacceria - Focaccias Unicas</title>
   
+  <!-- Tipografías de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
   
+  <!-- Tailwind CSS y Lucide Icons (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -33,7 +35,12 @@
   </script>
 
   <style>
-    .rustic-bg { background-color: #F7F5F0; background-image: radial-gradient(#4a352503 1px, transparent 0), radial-gradient(#4a352503 1px, transparent 0); background-size: 10px 10px; background-position: 0 0, 5px 5px; }
+    .rustic-bg {
+      background-color: #F7F5F0;
+      background-image: radial-gradient(#4a352503 1px, transparent 0), radial-gradient(#4a352503 1px, transparent 0);
+      background-size: 10px 10px;
+      background-position: 0 0, 5px 5px;
+    }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .img-zoom { overflow: hidden; }
@@ -49,18 +56,23 @@
 </head>
 <body class="rustic-bg text-focaccia-cocoa font-body antialiased selection:bg-focaccia-kraft selection:text-focaccia-cream">
 
-  <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300 pointer-events-auto">
+  <!-- ================= BARRA DE NAVEGACIÓN SUPERIOR ================= -->
+  <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
-      <div class="flex items-center h-20 overflow-visible">
-        <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 pointer-events-auto pr-6">
-          <!-- Logo escalado y contenido sin distorsión -->
-          <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-16 md:h-20 w-[200px] md:w-[300px] object-contain my-auto" onerror="this.style.display='none'">
+      <div class="flex items-center h-20">
+        <!-- Logotipo oficial con object-contain para mantener proporciones perfectas -->
+        <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 pr-6">
+          <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-16 md:h-20 w-auto object-contain my-auto" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
+          <span class="hidden">Lima Focacceria</span>
         </a>
+
+        <!-- Línea divisoria flotante -->
         <div class="hidden md:block h-8 w-[1px] bg-focaccia-kraft/25 ml-2 mr-6 self-center"></div>
       </div>
 
-      <nav class="hidden md:flex items-center space-x-10 text-[11px] font-title font-bold tracking-widest pointer-events-auto">
+      <!-- Menú Desktop -->
+      <nav class="hidden md:flex items-center space-x-10 text-[11px] font-title font-bold tracking-widest">
         <a href="#concepto" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">EL CONCEPTO</a>
         <a href="#carta" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">LA CARTA</a>
         <a href="#proceso" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">EL PROCESO</a>
@@ -82,16 +94,86 @@
         </button>
       </div>
     </div>
+
+    <!-- Menú Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden bg-focaccia-cream border-b border-focaccia-kraft/20 px-6 py-6">
+      <nav class="flex flex-col space-y-4 text-xs font-title font-semibold tracking-widest">
+        <a href="#concepto" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">EL CONCEPTO</a>
+        <a href="#carta" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">LA CARTA</a>
+        <a href="#proceso" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">EL PROCESO</a>
+        <a href="#instagram" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">MOMENTOS</a>
+        <a href="#contacto" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2">ENCUÉNTRANOS</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- Resto del contenido igual ... -->
-  <!-- ... (Secciones Omitidas para brevedad, mantener igual) ... -->
+  <!-- ================= SECCIÓN HERO ================= -->
+  <section class="relative h-[calc(100vh-5rem)] flex items-center bg-cover bg-center overflow-hidden" 
+           style="background-image: url('https://images.unsplash.com/photo-1571244856341-4f3dd95db33e?q=80&w=1920&auto=format&fit=crop');">
+    <div class="absolute inset-0 bg-gradient-to-r from-[#21140B]/95 via-[#2F1E13]/90 to-[#422C1D]/60 z-0"></div>
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
+      <div class="max-w-2xl space-y-5">
+        <div class="space-y-2">
+          <div class="flex items-center space-x-2 text-focaccia-kraft">
+            <span class="h-[1px] w-8 bg-focaccia-kraft"></span>
+            <span class="text-[10px] md:text-xs tracking-[0.3em] font-title font-bold uppercase text-focaccia-kraft">Masa Madre de 48 Horas</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-title font-black text-focaccia-cream leading-[1.1] tracking-wide">
+            CRUJIENTE<br>POR FUERA,<br>
+            <span class="text-focaccia-kraft font-normal italic lowercase font-serif leading-none tracking-normal block my-0.5">esponjosa</span>
+            POR DENTRO.
+          </h1>
+        </div>
+        <p class="text-sm md:text-base text-focaccia-cream/90 font-normal max-w-lg leading-relaxed">
+          Horneadas a diario en Miraflores con fermentación lenta, aceite de oliva extra virgen y sal de Maras.
+        </p>
+        <div class="pt-1 flex flex-col sm:flex-row gap-4 items-start">
+          <a href="#carta" class="inline-flex items-center justify-center px-8 py-4 bg-focaccia-cream text-focaccia-cocoa text-xs font-title font-bold tracking-widest rounded-xl hover:bg-focaccia-kraft hover:text-focaccia-cream transition-all duration-300 text-center shadow-md">
+            VER LA CARTA DE HOY
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-focaccia-cocoa text-white py-16 border-t border-focaccia-kraft/15">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div class="space-y-4">
+          <!-- Logo Footer con dimensiones sincronizadas -->
+          <img src="limafoca-removebg-preview.png" alt="Lima Focacceria Footer Logo" class="h-16 md:h-20 w-auto object-contain brightness-0 invert">
+          <p class="text-xs text-white/80 leading-relaxed pt-2">Focaccias artesanales premium horneadas pacientemente para brindar la máxima ligereza.</p>
+          <div class="flex items-center space-x-6 pt-3">
+            <a href="#" class="text-white hover:text-focaccia-kraft transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            <a href="#" class="text-xs text-white font-title font-bold tracking-widest hover:text-focaccia-kraft transition-colors">WhatsApp</a>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">MENÚ</h4>
+          <ul class="space-y-2 text-xs text-white/80 font-medium">
+            <li><a href="#concepto">El Concepto</a></li>
+            <li><a href="#carta">La Carta</a></li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">CONTACTO</h4>
+          <ul class="space-y-2 text-xs text-white/80">
+            <li>Juan de la Fuente 383, Miraflores</li>
+            <li>937743015</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-t-white/10 text-[10px] text-white/50 uppercase tracking-widest text-center font-semibold">
+        &copy; 2026 Lima Focacceria. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
 
   <script>
-    // Mantener toda la lógica previa
+    function toggleCart() { }
     function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
     function filterMenu(cat) { console.log('Filtrando:', cat); }
-    // ...
   </script>
 </body>
 </html>
