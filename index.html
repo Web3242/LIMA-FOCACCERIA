@@ -57,14 +57,13 @@
 <body class="rustic-bg text-focaccia-cocoa font-body antialiased selection:bg-focaccia-kraft selection:text-focaccia-cream">
 
   <!-- ================= BARRA DE NAVEGACIÓN SUPERIOR ================= -->
-  <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300">
+  <header class="sticky top-0 z-[9999] bg-focaccia-cream/70 backdrop-blur-md border-b border-focaccia-kraft/20 transition-all duration-300 pointer-events-auto">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       
-      <div class="flex items-center h-20">
-        <!-- Logotipo oficial con object-contain para mantener proporciones perfectas -->
-        <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 pr-6">
+      <div class="flex items-center h-20 overflow-visible">
+        <!-- Logotipo natural, sin estiramientos -->
+        <a href="#" class="flex items-center hover:opacity-90 transition-all duration-300 h-20 pointer-events-auto pr-6">
           <img src="limafoca-removebg-preview.png" alt="Lima Focacceria" class="h-16 md:h-20 w-auto object-contain my-auto" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
-          <span class="hidden">Lima Focacceria</span>
         </a>
 
         <!-- Línea divisoria flotante -->
@@ -72,7 +71,7 @@
       </div>
 
       <!-- Menú Desktop -->
-      <nav class="hidden md:flex items-center space-x-10 text-[11px] font-title font-bold tracking-widest">
+      <nav class="hidden md:flex items-center space-x-10 text-[11px] font-title font-bold tracking-widest pointer-events-auto">
         <a href="#concepto" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">EL CONCEPTO</a>
         <a href="#carta" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">LA CARTA</a>
         <a href="#proceso" class="hover:text-focaccia-kraft transition-colors cursor-pointer py-2">EL PROCESO</a>
@@ -89,6 +88,7 @@
           </svg>
           <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-focaccia-cocoa text-focaccia-cream text-[9px] font-title font-bold w-5 h-5 rounded-full flex items-center justify-center border border-focaccia-cream hidden">0</span>
         </button>
+
         <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-focaccia-cocoa">
           <i data-lucide="menu" class="w-6 h-6 stroke-[1.5]" id="menu-icon"></i>
         </button>
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Menú Móvil -->
-    <div id="mobile-menu" class="hidden md:hidden bg-focaccia-cream border-b border-focaccia-kraft/20 px-6 py-6">
+    <div id="mobile-menu" class="hidden md:hidden bg-focaccia-cream border-b border-focaccia-kraft/20 px-6 py-6 transition-all duration-300">
       <nav class="flex flex-col space-y-4 text-xs font-title font-semibold tracking-widest">
         <a href="#concepto" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">EL CONCEPTO</a>
         <a href="#carta" onclick="toggleMobileMenu()" class="hover:text-focaccia-kraft py-2 border-b border-focaccia-kraft/10">LA CARTA</a>
@@ -141,9 +141,9 @@
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
         <div class="space-y-4">
-          <!-- Logo Footer con dimensiones sincronizadas -->
+          <!-- Logo Footer con dimensiones sincronizadas al logo de arriba -->
           <img src="limafoca-removebg-preview.png" alt="Lima Focacceria Footer Logo" class="h-16 md:h-20 w-auto object-contain brightness-0 invert">
-          <p class="text-xs text-white/80 leading-relaxed pt-2">Focaccias artesanales premium horneadas pacientemente para brindar la máxima ligereza.</p>
+          <p class="text-xs text-white/90 leading-relaxed pt-2">Focaccias artesanales premium horneadas pacientemente para brindar la máxima ligereza.</p>
           <div class="flex items-center space-x-6 pt-3">
             <a href="#" class="text-white hover:text-focaccia-kraft transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
             <a href="#" class="text-xs text-white font-title font-bold tracking-widest hover:text-focaccia-kraft transition-colors">WhatsApp</a>
@@ -151,14 +151,14 @@
         </div>
         <div class="space-y-4">
           <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">MENÚ</h4>
-          <ul class="space-y-2 text-xs text-white/80 font-medium">
+          <ul class="space-y-2 text-xs text-white/90 font-medium">
             <li><a href="#concepto">El Concepto</a></li>
             <li><a href="#carta">La Carta</a></li>
           </ul>
         </div>
         <div class="space-y-4">
           <h4 class="font-title font-bold text-xs tracking-wider uppercase text-focaccia-kraft">CONTACTO</h4>
-          <ul class="space-y-2 text-xs text-white/80">
+          <ul class="space-y-2 text-xs text-white/90">
             <li>Juan de la Fuente 383, Miraflores</li>
             <li>937743015</li>
           </ul>
@@ -171,11 +171,9 @@
   </footer>
 
   <script>
-    function toggleCart() { }
+    function toggleCart() { console.log('Bolsa'); }
     function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
     function filterMenu(cat) { console.log('Filtrando:', cat); }
   </script>
 </body>
 </html>
-```
-eof
